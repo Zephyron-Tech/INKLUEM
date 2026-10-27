@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   description:
     "Trenažér krizových a každodenních situací pro učitele a asistenty pedagoga. Krátký scénář, volba reakce A až D, okamžitá zpětná vazba a metodické vysvětlení.",
   applicationName: "INKLUEM",
+  alternates: { canonical: "/" },
+  appleWebApp: { title: "INKLUEM", capable: true, statusBarStyle: "default" },
+  formatDetection: { telephone: false, email: false, address: false },
   openGraph: {
     title: "INKLUEM: trénink situací ve třídě",
     description:
