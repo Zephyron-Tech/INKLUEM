@@ -1,3 +1,20 @@
+export type Rating = "suitable" | "partial" | "unsuitable";
+
+export const RATING_LABEL: Record<Rating, string> = {
+  suitable: "Vhodná reakce",
+  partial: "Částečně vhodná",
+  unsuitable: "Nevhodná reakce",
+};
+
+export type Feedback = {
+  /** Hodnocení a dopad pro každou z reakcí A až D. */
+  outcomes: [Outcome, Outcome, Outcome, Outcome];
+  /** Metodické vysvětlení společné pro situaci. */
+  explanation: string;
+};
+
+export type Outcome = { rating: Rating; text: string };
+
 export type Situation = {
   title: string;
   image: string;
@@ -7,6 +24,8 @@ export type Situation = {
   options: [string, string, string, string];
   /** Zdrojový scénář z PDF (strana 4). Ostatní jsou jen zástupné. */
   fromPdf: boolean;
+  /** Ukázková zpětná vazba. Zatím jen u první situace, texty čekají na odborníka. */
+  feedback?: Feedback;
 };
 
 const placeholder = (letter: string) => `Reakce ${letter}, zástupný text.`;
@@ -43,6 +62,30 @@ export const situations: Situation[] = [
       "Poslat dítě ze třídy.",
     ],
     fromPdf: true,
+    // Ukázkové texty, které dávají smysl při vyzkoušení. Metodicky je musí
+    // schválit odborník (speciální pedagog), než půjdou do aplikace.
+    feedback: {
+      outcomes: [
+        {
+          rating: "unsuitable",
+          text: "Tlak v hlučné třídě napětí zvýší. Dítě se může úplně zablokovat, křik zesílí a úkol se nesplní.",
+        },
+        {
+          rating: "partial",
+          text: "Napětí může časem opadnout, ale hluk ve třídě zůstává. Dítě tak zůstane samo s tím, co ho přetížilo.",
+        },
+        {
+          rating: "suitable",
+          text: "Méně hluku a chvíle klidu pomohou dítěti se uklidnit. Pak je snazší vrátit se k úkolu, třeba po menších krocích.",
+        },
+        {
+          rating: "unsuitable",
+          text: "Odchod může dítě vnímat jako trest. Klid jde zajistit i bez vyloučení, třeba klidným místem ve třídě.",
+        },
+      ],
+      explanation:
+        "Zakrývání uší a křik často znamenají, že je kolem příliš mnoho podnětů, ne že se dítě vzpírá. Proto se nejdřív sníží zátěž (hluk, nároky, počet lidí kolem) a k úkolu se dítě vrací až po zklidnění.",
+    },
   },
   stub("Konflikt s vrstevníkem", "konflikt-s-vrstevnikem"),
   stub("Senzorické přetížení", "senzoricke-pretizeni"),

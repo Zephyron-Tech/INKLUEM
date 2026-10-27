@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { demoSituations as situations } from "./situations";
+import { demoSituations as situations, RATING_LABEL, type Rating } from "./situations";
+
+const RATING_STYLE: Record<Rating, { background: string; color: string }> = {
+  suitable: { background: "var(--c)", color: "var(--c-ink)" },
+  partial: { background: "var(--b)", color: "var(--b-ink)" },
+  unsuitable: { background: "var(--a)", color: "var(--a-ink)" },
+};
 
 const LETTERS = ["A", "B", "C", "D"] as const;
 const LETTER_CLASS = ["l-a", "l-b", "l-c", "l-d"] as const;
@@ -210,28 +216,50 @@ export function ScenarioDemo() {
               </div>
             )}
 
-            <div className="fb-box rise" style={{ "--i": 1 } as React.CSSProperties}>
-              <div className="flex items-center justify-between gap-2">
-                <h4 className="text-[15px] font-extrabold">Co se stane</h4>
-                <span className="tag">Ukázka, zástupný text</span>
-              </div>
-              <p className="mt-1.5 text-[15px] leading-snug">
-                Sem přijde zpětná vazba k vybrané reakci. Text napíše odborník.
-              </p>
-            </div>
+            {(() => {
+              const fb = situation.feedback;
+              const outcome = fb && choice !== null ? fb.outcomes[choice] : null;
+              return (
+                <>
+                  <div className="fb-box rise" style={{ "--i": 1 } as React.CSSProperties}>
+                    <div className="flex items-center justify-between gap-2">
+                      <h4 className="text-[15px] font-extrabold">Co se stane</h4>
+                      {outcome ? (
+                        <span className="tag" style={RATING_STYLE[outcome.rating]}>
+                          {RATING_LABEL[outcome.rating]}
+                        </span>
+                      ) : (
+                        <span className="tag">Ukázka, zástupný text</span>
+                      )}
+                    </div>
+                    <p className="mt-1.5 text-[15px] leading-snug">
+                      {outcome
+                        ? outcome.text
+                        : "Sem přijde zpětná vazba k vybrané reakci. Text napíše odborník."}
+                    </p>
+                  </div>
 
-            <div className="fb-box info rise" style={{ "--i": 2 } as React.CSSProperties}>
-              <div className="flex items-center justify-between gap-2">
-                <h4 className="text-[15px] font-extrabold">Metodické vysvětlení</h4>
-                <span className="tag" style={{ background: "var(--surface)" }}>
-                  Ukázka
-                </span>
-              </div>
-              <p className="mt-1.5 text-[15px] leading-snug">
-                Sem přijde krátké vysvětlení, proč reakce funguje nebo nefunguje. Odborný
-                text zatím neexistuje, tohle je jen zástupná věta.
-              </p>
-            </div>
+                  <div className="fb-box info rise" style={{ "--i": 2 } as React.CSSProperties}>
+                    <div className="flex items-center justify-between gap-2">
+                      <h4 className="text-[15px] font-extrabold">Metodické vysvětlení</h4>
+                      <span className="tag" style={{ background: "var(--surface)" }}>
+                        Ukázka
+                      </span>
+                    </div>
+                    <p className="mt-1.5 text-[15px] leading-snug">
+                      {fb
+                        ? fb.explanation
+                        : "Sem přijde krátké vysvětlení, proč reakce funguje nebo nefunguje. Odborný text zatím neexistuje, tohle je jen zástupná věta."}
+                    </p>
+                    {fb && (
+                      <p className="mt-2 text-[12px] leading-snug text-muted">
+                        Ukázkový text. Skutečná vysvětlení schválí odborník.
+                      </p>
+                    )}
+                  </div>
+                </>
+              );
+            })()}
 
             <div className="rise fb-actions flex flex-col gap-2" style={{ "--i": 3 } as React.CSSProperties}>
               <button type="button" className="btn-phone primary" onClick={next}>
