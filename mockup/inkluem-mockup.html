@@ -37,6 +37,9 @@ body{margin:0;background:var(--canvas);color:var(--pagetext);font:16px/1.5 var(-
 .side a:hover,.side a:focus-visible{background:rgba(255,255,255,.1);outline:none}
 .side a.on{background:rgba(255,255,255,.14);color:#fff}
 .side svg.ic{width:22px;height:22px}
+.side a.back{margin-bottom:6px;background:rgba(255,255,255,.08);color:#fff}
+.back:focus-visible{outline:3px solid #9CC0F5;outline-offset:2px}
+.mbar{display:none}
 .tag{margin-top:auto;padding:16px 12px 0;font-style:italic;color:#AEBBD6;font-size:14px;line-height:1.4}
 .tag svg{width:16px;height:16px;color:#8DA3CC;display:block;margin-bottom:6px}
 .wrap{min-width:0}
@@ -51,25 +54,26 @@ h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance}
 .tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:16px}
 .tools .lbl{font-size:14px;font-weight:700;color:var(--pagetext2);margin-right:2px}
 .notice{margin-top:20px;background:#FFF1CC;color:#6B4800;border-radius:14px;padding:12px 16px;font-size:15px;max-width:80ch}
-section{margin-top:56px;scroll-margin-top:16px}
+section{margin-top:40px;scroll-margin-top:16px}
 h2{font-size:28px;font-weight:800;margin-bottom:6px}
 .lead{color:var(--pagetext2);margin:0 0 20px;max-width:64ch}
-.ds{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-.card{background:#fff;color:var(--pagetext);border-radius:20px;padding:20px;box-shadow:var(--shadow);min-width:0}
-.card h3{font-size:18px;margin-bottom:12px}
-.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
-.sw div{border-radius:12px;padding:10px;font-size:13px;font-weight:600;line-height:1.25;min-height:64px;display:flex;align-items:flex-end}
-.sw small{display:block;font-weight:500;opacity:.85}
-.darkpanel{margin-top:12px;background:var(--bg);border-radius:14px;padding:10px}
-.type div{display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-bottom:1px solid #E2DDD3;padding:6px 0}
+.ds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ds .wide{grid-column:1/-1}
+.card{background:#fff;color:var(--pagetext);border-radius:20px;padding:16px 18px;box-shadow:var(--shadow);min-width:0}
+.card h3{font-size:18px;margin-bottom:10px}
+.sw{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px}
+.sw div{border-radius:10px;padding:6px 8px;font-size:12px;font-weight:600;line-height:1.2;min-height:52px;display:flex;align-items:flex-end;min-width:0;overflow-wrap:anywhere}
+.sw small{display:none}
+.darkpanel{margin-top:8px;background:var(--bg);border-radius:12px;padding:6px}
+.type div{display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-bottom:1px solid #E2DDD3;padding:3px 0}
 .type span{color:var(--pagetext2);font-size:13px;white-space:nowrap}
 .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
 .gal figure{margin:0;font-size:12px;color:var(--pagetext2)}
 .gal img{width:100%;height:auto;display:block;border-radius:12px;background:#fff;border:1px solid #E2DDD3}
-.logos{display:flex;gap:12px;flex-wrap:wrap}
-.logos div{display:flex;align-items:center;gap:10px;border-radius:16px;padding:14px 18px;font:800 20px var(--font-display);letter-spacing:.04em}
-.icons{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;color:#1F3A5F}
-.icons div{display:grid;place-items:center;aspect-ratio:1;background:#EFEBE4;border-radius:12px}
+.logos{display:flex;gap:10px;flex-direction:column}
+.logos div{display:flex;align-items:center;gap:10px;border-radius:14px;padding:10px 16px;font:800 20px var(--font-display);letter-spacing:.04em}
+.icons{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;color:#1F3A5F}
+.icons div{display:grid;place-items:center;aspect-ratio:1.2;background:#EFEBE4;border-radius:10px}
 .icons svg{width:26px;height:26px}
 .fn2{font-size:13px;color:var(--pagetext2);margin:10px 0 0}
 .group{margin-top:36px;scroll-margin-top:16px}
@@ -194,11 +198,16 @@ h2{font-size:28px;font-weight:800;margin-bottom:6px}
 .chk{width:100%;border-collapse:collapse;font-size:14px;display:block;overflow-x:auto}
 .chk th,.chk td{text-align:left;padding:6px 14px 6px 0;border-bottom:1px solid #E2DDD3;white-space:nowrap}
 @media (max-width:900px){
+  .ds{grid-template-columns:minmax(0,1fr)}
+  .sw{grid-template-columns:repeat(4,minmax(0,1fr))}
   .layout{grid-template-columns:minmax(0,1fr);gap:16px}
   .side{position:static;min-height:0;flex-direction:row;flex-wrap:wrap;align-items:center;padding:10px;border-radius:22px;gap:4px}
   .brand{padding:0 8px;font-size:18px}
   .side a{min-height:44px;padding:0 10px}
   .tag{display:none}
+  .side a.back{display:none}
+  .mbar{display:flex;position:sticky;top:0;z-index:50;background:var(--side);border-radius:16px;padding:4px 8px;margin-bottom:10px}
+  .mbar a{display:flex;align-items:center;min-height:44px;padding:0 8px;color:#fff;text-decoration:none;font-size:15px;font-weight:600;border-radius:12px}
 }
 @media (max-width:420px){.row{justify-content:center}.item figcaption{padding:0}.top{align-items:flex-start;flex-direction:column}}
 @media (prefers-reduced-motion:no-preference){.item{transition:transform .2s}.item:hover{transform:translateY(-3px)}}
@@ -230,9 +239,11 @@ h2{font-size:28px;font-weight:800;margin-bottom:6px}
 </defs>
 </svg>
 
+
 <div class="layout">
   <aside class="side" aria-label="Navigace prezentace">
     <div class="brand" id="brandSide"></div>
+    
     <a href="#ds" data-go="ds">Design systém</a>
     <a href="#g0" data-go="g0">1 Start</a>
     <a href="#g1" data-go="g1">2 Domů a výběr</a>
@@ -256,17 +267,17 @@ h2{font-size:28px;font-weight:800;margin-bottom:6px}
     <h2>Design systém</h2>
     <p class="lead">Teplé světlé pozadí, tmavě modrý akcent, pastelové karty podle profilu. Aplikace je výchozí světlá, tmavý režim je volitelný.</p>
     <div class="ds">
-      <div class="card"><h3>Barvy</h3><div class="sw" id="sw"></div><div class="darkpanel dark"><div class="sw" id="swd"></div></div><p class="fn2">Nahoře světlý režim, dole tmavý.</p></div>
+      <div class="card wide"><h3>Barvy</h3><div class="sw" id="sw"></div><div class="darkpanel dark"><div class="sw" id="swd"></div></div></div>
       <div class="card type"><h3>Písmo (Dynamic Type)</h3>
         <div><span style="font:800 34px/1.1 var(--font-display);color:var(--pagetext)">Large Title</span><span>34 / 800</span></div>
         <div><span style="font:800 26px/1.1 var(--font-display);color:var(--pagetext)">Title</span><span>26 / 800</span></div>
         <div><b style="font:600 17px var(--font-body)">Headline</b><span>17 / 600</span></div>
         <div><span style="font:16px var(--font-body);color:var(--pagetext)">Body, text scénáře</span><span>16 / 400</span></div>
         <div><span style="font:13px var(--font-body)">Footnote, popisky</span><span>13 / 400</span></div>
-        <p class="fn2">Nadpisy zaoblené (SF Pro Rounded), text systémový (SF Pro). Přepínač Velikost textu škáluje celou aplikaci.</p>
+        <p class="fn2" style="margin-top:6px">Nadpisy zaoblené (SF Pro Rounded), text systémový (SF Pro).</p>
       </div>
       <div class="card"><h3>Logo</h3><div class="logos"><div style="background:#17243D;color:#fff" id="lgDark"></div><div style="background:#fff;color:#1B2A41;border:1px solid #E2DDD3" id="lgLight"></div></div></div>
-      <div class="card"><h3>Ikony (styl SF Symbols)</h3><div class="icons" id="icons"></div><p class="fn2">Vlastní sada s jednotnou tloušťkou čáry. V aplikaci SF Symbols.</p></div>
+      <div class="card"><h3>Ikony (styl SF Symbols)</h3><div class="icons" id="icons"></div><p class="fn2">Vlastní sada, v aplikaci SF Symbols.</p></div>
     </div>
   </section>
 

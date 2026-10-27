@@ -1,80 +1,464 @@
 @import "tailwindcss";
 
+/* Světlý režim je výchozí. Tmavý se zapíná atributem data-theme="dark"
+   na <html> (viz skript v layout.tsx a ThemeToggle). */
 :root {
+  color-scheme: light;
   --background: #f7f4ef;
   --surface: #ffffff;
+  --surface-2: #efebe4;
   --foreground: #1b2a41;
   --muted: #4f5b72;
   --line: #e2ddd3;
   --navy: #1f3a5f;
+  --on-navy: #ffffff;
+  --band: #1f3a5f;
+  --on-band: #ffffff;
   --info: #e3eefb;
+  --info-ink: #1f3a5f;
   --pas: #e3effd;
   --pas-ink: #1f4f8a;
   --asp: #edebf9;
   --asp-ink: #4b3a8f;
   --adhd: #e0f3ed;
   --adhd-ink: #1d6b43;
-  --warn: #fff1cc;
-  --warn-ink: #6b4800;
+  --a: #f9d3cd;
+  --a-ink: #8a2a1d;
+  --b: #fbe6ba;
+  --b-ink: #704b00;
+  --c: #cdebd8;
+  --c-ink: #1b6139;
+  --d: #dfd7f5;
+  --d-ink: #55399e;
+  --phone: #17233b;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0e1524;
-    --surface: #172036;
-    --foreground: #eaf0fb;
-    --muted: #a8b4cc;
-    --line: #2a3654;
-    --navy: #9cc0f5;
-    --info: #1b2a4a;
-    --pas: #1d3556;
-    --pas-ink: #a9cbf5;
-    --asp: #2a2650;
-    --asp-ink: #cbc1f5;
-    --adhd: #19372f;
-    --adhd-ink: #9ddbbb;
-    --warn: #3f3210;
-    --warn-ink: #ffdf8f;
-  }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #0e1524;
+  --surface: #172036;
+  --surface-2: #1f2a45;
+  --foreground: #eaf0fb;
+  --muted: #a8b4cc;
+  --line: #2a3654;
+  --navy: #9cc0f5;
+  --on-navy: #0e1524;
+  --band: #16233d;
+  --on-band: #eaf0fb;
+  --info: #1b2b4a;
+  --info-ink: #cfe0fa;
+  --pas: #1d3556;
+  --pas-ink: #a9cbf5;
+  --asp: #2a2650;
+  --asp-ink: #cbc1f5;
+  --adhd: #19372f;
+  --adhd-ink: #9ddbbb;
+  --a: #4a2420;
+  --a-ink: #ffc9c0;
+  --b: #4a3a14;
+  --b-ink: #ffde99;
+  --c: #1d3e2b;
+  --c-ink: #b4e8c8;
+  --d: #35295a;
+  --d-ink: #d6ccf7;
+  --phone: #05080f;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-navy: var(--navy);
+  --color-on-navy: var(--on-navy);
+  --color-band: var(--band);
+  --color-on-band: var(--on-band);
   --color-info: var(--info);
+  --color-info-ink: var(--info-ink);
   --color-pas: var(--pas);
   --color-pas-ink: var(--pas-ink);
   --color-asp: var(--asp);
   --color-asp-ink: var(--asp-ink);
   --color-adhd: var(--adhd);
   --color-adhd-ink: var(--adhd-ink);
-  --color-warn: var(--warn);
-  --color-warn-ink: var(--warn-ink);
   --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  scroll-padding-top: 1rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+::selection {
+  background: var(--navy);
+  color: var(--on-navy);
 }
 
 :focus-visible {
   outline: 3px solid var(--navy);
   outline-offset: 3px;
   border-radius: 6px;
+}
+
+/* Skok na kotvu nesmí zmizet pod hranou okna. */
+section[id] {
+  scroll-margin-top: 1rem;
+}
+
+/* Stav přepínače se řídí atributem na <html>, takže je správně už při prvním vykreslení. */
+:root:not([data-theme="dark"]) .theme-btn[data-value="light"],
+:root[data-theme="dark"] .theme-btn[data-value="dark"] {
+  background: var(--navy);
+  color: var(--on-navy);
+}
+
+[data-theme="dark"] .tile img,
+[data-theme="dark"] .scene img,
+[data-theme="dark"] #profily img {
+  filter: brightness(0.9);
+}
+
+/* ---------- Ukázka scénáře v telefonu ---------- */
+
+.phone {
+  position: relative;
+  width: min(100%, 340px);
+  margin-inline: auto;
+  padding: 10px;
+  border-radius: 54px;
+  background: var(--phone);
+  box-shadow:
+    0 0 0 1.5px rgb(255 255 255 / 0.08) inset,
+    0 24px 48px -16px rgb(15 25 45 / 0.35);
+}
+
+.phone-screen {
+  position: relative;
+  overflow: hidden;
+  height: 676px;
+  border-radius: 44px;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.phone-island {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 5;
+  width: 96px;
+  height: 28px;
+  translate: -50% 0;
+  border-radius: 999px;
+  background: #000;
+}
+
+.phone-status {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 4;
+  display: flex;
+  height: 46px;
+  align-items: center;
+  padding: 6px 30px 0;
+  background: var(--background);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.phone-home {
+  position: absolute;
+  bottom: 7px;
+  left: 50%;
+  z-index: 5;
+  width: 112px;
+  height: 5px;
+  translate: -50% 0;
+  border-radius: 999px;
+  background: var(--foreground);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.panes {
+  position: absolute;
+  inset: 46px 0 0 0;
+}
+
+.pane {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px 18px 30px;
+  background: var(--background);
+  transition:
+    transform 420ms var(--ease),
+    opacity 260ms ease-out;
+}
+
+.pane-scenario[data-active="false"] {
+  transform: translateX(-22%);
+  opacity: 0;
+}
+
+.pane-feedback {
+  transform: translateX(0);
+}
+
+.pane-feedback[data-active="false"] {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.pane-scenario[data-enter="next"] {
+  animation: enter-next 420ms var(--ease) both;
+}
+
+@keyframes enter-next {
+  from {
+    transform: translateX(28px);
+    opacity: 0;
+  }
+}
+
+.pane-feedback[data-active="true"] .rise {
+  animation: rise 440ms var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}
+
+.progress {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  flex: 1;
+  gap: 3px;
+}
+
+.progress i {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--line);
+  transform-origin: left;
+}
+
+.progress i[data-on="true"] {
+  background: var(--navy);
+}
+
+.scene {
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  aspect-ratio: 2 / 1;
+  border-radius: 16px;
+  background: var(--info);
+}
+
+.tag {
+  display: inline-block;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--muted);
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.opt {
+  display: flex;
+  width: 100%;
+  min-height: 50px;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  padding: 6px 12px 6px 8px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: pointer;
+  transition:
+    transform 160ms var(--ease),
+    opacity 220ms ease-out,
+    border-color 160ms ease-out;
+}
+
+.opt .chev {
+  margin-left: auto;
+  color: var(--muted);
+  flex: none;
+}
+
+@media (hover: hover) {
+  .opt:hover {
+    border-color: var(--navy);
+  }
+}
+
+.opt:active {
+  transform: scale(0.98);
+}
+
+.opt[data-state="picked"] {
+  border-color: var(--navy);
+  transform: scale(0.98);
+}
+
+.opt[data-state="dim"] {
+  opacity: 0.4;
+}
+
+.letter {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 800;
+  transition: transform 220ms var(--ease);
+}
+
+.opt[data-state="picked"] .letter {
+  transform: scale(1.12);
+}
+
+.l-a {
+  background: var(--a);
+  color: var(--a-ink);
+}
+.l-b {
+  background: var(--b);
+  color: var(--b-ink);
+}
+.l-c {
+  background: var(--c);
+  color: var(--c-ink);
+}
+.l-d {
+  background: var(--d);
+  color: var(--d-ink);
+}
+
+.fb-box {
+  flex: none;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+}
+
+.fb-box.info {
+  background: var(--info);
+  border-color: transparent;
+  color: var(--info-ink);
+}
+
+.btn-phone {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 14px;
+  padding: 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 160ms var(--ease),
+    opacity 160ms ease-out;
+}
+
+.btn-phone:active {
+  transform: scale(0.97);
+}
+
+.btn-phone.primary {
+  background: var(--navy);
+  color: var(--on-navy);
+}
+
+.btn-phone.secondary {
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+@media (hover: hover) {
+  .btn-phone.primary:hover {
+    opacity: 0.9;
+  }
+}
+
+/* ---------- Mozaika situací ---------- */
+
+.tile img {
+  transition: transform 600ms var(--ease);
+}
+
+@media (hover: hover) {
+  .tile:hover img {
+    transform: scale(1.03);
+  }
+}
+
+/* ---------- Pohyb ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .pane,
+  .opt,
+  .letter,
+  .btn-phone,
+  .tile img {
+    transition: none;
+  }
+
+  .pane-scenario[data-enter="next"],
+  .pane-feedback[data-active="true"] .rise {
+    animation: none;
+  }
+
+  .opt:active,
+  .btn-phone:active,
+  .opt[data-state="picked"],
+  .opt[data-state="picked"] .letter {
+    transform: none;
+  }
+}
+
+/* Nadpisy, na které se programově přesouvá fokus, kroužek nepotřebují. */
+[tabindex="-1"]:focus-visible {
+  outline: none;
 }
