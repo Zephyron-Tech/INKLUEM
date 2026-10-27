@@ -1,0 +1,447 @@
+<title>INKLUEM mockup</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap">
+<style>
+/* Layout: světlé neutrální plátno s navy sidebarem (jako v PDF) a flow iPhone rámů. Aplikace je výchozí světlá, tmavý režim je volitelný přepínač u telefonu. Ilustrace jsou rastry vyříznuté z inkluem.pdf. */
+:root{
+  color-scheme:light;
+  --canvas:#E3E8F0; --bg:#F7F4EF; --surface:#FFFFFF; --surface2:#EFEBE4; --line:#E2DDD3;
+  --ink:#1B2A41; --ink2:#4F5B72; --pagetext:#1B2A41; --pagetext2:#44506A; --side:#17243D;
+  --navy:#1F3A5F; --on-navy:#FFFFFF; --info:#E3EEFB; --info-ink:#1F3A5F;
+  --pas:#E3EFFD; --pas-ink:#1F4F8A; --asp:#EDEBF9; --asp-ink:#4B3A8F;
+  --adhd:#E0F3ED; --adhd-ink:#1D6B43; --oth:#E9EBF2; --oth-ink:#424A5E;
+  --a:#F9D3CD; --a-ink:#8A2A1D; --b:#FBE6BA; --b-ink:#704B00;
+  --c:#CDEBD8; --c-ink:#1B6139; --d:#DFD7F5; --d-ink:#55399E;
+  --warn:#FFF1CC; --warn-ink:#6B4800; --shadow:0 1px 2px rgba(27,42,65,.08),0 4px 14px rgba(27,42,65,.07);
+  --glass:rgba(255,255,255,.78); --track:#E4E1DA;
+  --font-display:ui-rounded,"SF Pro Rounded","Nunito",system-ui,sans-serif;
+  --font-body:-apple-system,"SF Pro Text","SF Pro",system-ui,"Helvetica Neue",sans-serif;
+}
+.dark{
+  color-scheme:dark;
+  --bg:#0E1524; --surface:#172036; --surface2:#1F2A45; --line:#2A3654;
+  --ink:#EAF0FB; --ink2:#A8B4CC; --navy:#9CC0F5; --on-navy:#0E1524; --info:#1B2B4A; --info-ink:#CFE0FA;
+  --pas:#1D3556; --pas-ink:#A9CBF5; --asp:#2A2650; --asp-ink:#CBC1F5;
+  --adhd:#19372F; --adhd-ink:#9DDDBB; --oth:#242B3D; --oth-ink:#BFC6D8;
+  --a:#4A2420; --a-ink:#FFC9C0; --b:#4A3A14; --b-ink:#FFDE99;
+  --c:#1D3E2B; --c-ink:#B4E8C8; --d:#35295A; --d-ink:#D6CCF7;
+  --warn:#3F3210; --warn-ink:#FFDF8F; --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3);
+  --glass:rgba(23,32,54,.78); --track:#2A3654;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--pagetext);font:16px/1.5 var(--font-body);padding-block:16px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.layout{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;max-width:1440px;margin:0 auto;align-items:start}
+.side{position:sticky;top:16px;background:var(--side);color:#fff;border-radius:28px;padding:22px 16px;display:flex;flex-direction:column;gap:6px;min-height:min(760px,calc(100vh - 32px))}
+.brand{display:flex;align-items:center;gap:12px;padding:0 8px 18px;font:800 21px var(--font-display);letter-spacing:.04em}
+.side a{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:14px;color:#D8E2F4;text-decoration:none;font-size:15px;font-weight:600}
+.side a:hover,.side a:focus-visible{background:rgba(255,255,255,.1);outline:none}
+.side a.on{background:rgba(255,255,255,.14);color:#fff}
+.side svg.ic{width:22px;height:22px}
+.tag{margin-top:auto;padding:16px 12px 0;font-style:italic;color:#AEBBD6;font-size:14px;line-height:1.4}
+.tag svg{width:16px;height:16px;color:#8DA3CC;display:block;margin-bottom:6px}
+.wrap{min-width:0}
+h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance}
+.top{display:flex;gap:18px;align-items:center}
+.top h1{font-size:clamp(32px,6vw,52px);line-height:1.05;letter-spacing:-.01em;font-weight:800}
+.top p{max-width:62ch;color:var(--pagetext2);margin:10px 0 0}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#1F4F8A}
+.mini{min-height:44px;padding:0 16px;border-radius:22px;border:1px solid #B9C2D2;background:#fff;color:#1B2A41;font:600 15px var(--font-body);cursor:pointer}
+.mini[aria-pressed="true"]{background:#1F3A5F;color:#fff;border-color:#1F3A5F}
+.mini:focus-visible{outline:3px solid #1F3A5F;outline-offset:2px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.tools .lbl{font-size:14px;font-weight:700;color:var(--pagetext2);margin-right:2px}
+.notice{margin-top:20px;background:#FFF1CC;color:#6B4800;border-radius:14px;padding:12px 16px;font-size:15px;max-width:80ch}
+section{margin-top:56px;scroll-margin-top:16px}
+h2{font-size:28px;font-weight:800;margin-bottom:6px}
+.lead{color:var(--pagetext2);margin:0 0 20px;max-width:64ch}
+.ds{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{background:#fff;color:var(--pagetext);border-radius:20px;padding:20px;box-shadow:var(--shadow);min-width:0}
+.card h3{font-size:18px;margin-bottom:12px}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+.sw div{border-radius:12px;padding:10px;font-size:13px;font-weight:600;line-height:1.25;min-height:64px;display:flex;align-items:flex-end}
+.sw small{display:block;font-weight:500;opacity:.85}
+.darkpanel{margin-top:12px;background:var(--bg);border-radius:14px;padding:10px}
+.type div{display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-bottom:1px solid #E2DDD3;padding:6px 0}
+.type span{color:var(--pagetext2);font-size:13px;white-space:nowrap}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.gal figure{margin:0;font-size:12px;color:var(--pagetext2)}
+.gal img{width:100%;height:auto;display:block;border-radius:12px;background:#fff;border:1px solid #E2DDD3}
+.logos{display:flex;gap:12px;flex-wrap:wrap}
+.logos div{display:flex;align-items:center;gap:10px;border-radius:16px;padding:14px 18px;font:800 20px var(--font-display);letter-spacing:.04em}
+.icons{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;color:#1F3A5F}
+.icons div{display:grid;place-items:center;aspect-ratio:1;background:#EFEBE4;border-radius:12px}
+.icons svg{width:26px;height:26px}
+.fn2{font-size:13px;color:var(--pagetext2);margin:10px 0 0}
+.group{margin-top:36px;scroll-margin-top:16px}
+.group h3{font-size:20px;margin-bottom:4px}
+.group .lead{margin-bottom:16px}
+.row{display:flex;flex-wrap:wrap;gap:28px 24px;align-items:flex-start}
+.item{width:325px;max-width:100%;margin:0}
+.item figcaption{margin-top:10px;font-size:14px;color:var(--pagetext2);padding:0 6px}
+.item figcaption b{color:var(--pagetext);display:block;font-size:15px}
+.src{display:inline-block;margin-top:6px;font-size:12px;font-weight:700;border-radius:8px;padding:2px 8px;background:#D5EEE0;color:#1D5E3C}
+.src.add{background:#FFF1CC;color:#6B4800}
+.item .mini{margin:8px 0 0 6px}
+.phone{width:325px;height:688px;position:relative}
+.bezel{position:absolute;left:0;top:0;width:406px;height:860px;transform:scale(.8);transform-origin:0 0;background:#11151F;border-radius:60px;padding:8px;box-shadow:0 12px 32px rgba(20,32,60,.28)}
+#flow{--dt:1}
+.scr{position:relative;width:390px;height:844px;border-radius:52px;overflow:hidden;background:var(--bg);color:var(--ink);font:calc(16px*var(--dt))/1.35 var(--font-body);-webkit-font-smoothing:antialiased}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:120px;height:34px;border-radius:17px;background:#000;z-index:30}
+.sb{position:absolute;inset:0 0 auto 0;height:54px;display:flex;justify-content:space-between;align-items:center;padding:8px 32px 0 48px;font:600 17px var(--font-body);z-index:29;letter-spacing:-.01em}
+.sb i{display:flex;gap:6px;align-items:center}
+.body{position:absolute;inset:54px 0 0 0;overflow:hidden;padding:0 20px 100px}
+.body.full{bottom:34px;padding-bottom:0;display:flex;flex-direction:column}
+.ic{width:22px;height:22px;flex:none}
+.tabs{position:absolute;inset:auto 0 0 0;height:84px;background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);border-top:.5px solid var(--line);display:flex;padding:6px 8px 0;z-index:20}
+.tabs div{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:600;color:var(--ink2);min-height:50px;padding-top:4px}
+.tabs div.on{color:var(--navy)}
+.tabs svg{width:26px;height:26px}
+.hi{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:var(--ink);opacity:.85;z-index:21}
+.nav{display:flex;align-items:center;justify-content:space-between;min-height:48px;margin:0 -8px;flex:none;position:relative}
+.nav .ct{position:absolute;left:0;right:0;text-align:center;font:600 calc(17px*var(--dt)) var(--font-body);pointer-events:none}
+.navblur{position:absolute;inset:54px 0 auto 0;height:48px;background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);border-bottom:.5px solid var(--line);z-index:15;display:flex;align-items:center;justify-content:center;font:600 17px var(--font-body)}
+.navblur .nbtn{position:absolute;left:8px}
+.nbtn{width:44px;height:44px;display:grid;place-items:center;border-radius:22px;color:var(--navy);flex:none}
+.nbtn svg{width:24px;height:24px}
+.lt{font:800 calc(34px*var(--dt))/1.1 var(--font-display);letter-spacing:-.01em;margin:6px 0 4px;text-wrap:balance}
+.t2{font:800 calc(26px*var(--dt))/1.15 var(--font-display);margin:6px 0 8px;text-wrap:balance}
+.sub{font-size:calc(16px*var(--dt));color:var(--ink2);margin:0 0 14px}
+.fn{font-size:calc(13px*var(--dt));color:var(--ink2);line-height:1.25}
+.kick{font-size:calc(13px*var(--dt));font-weight:700;letter-spacing:.05em;color:var(--ink2)}
+.info{display:flex;gap:12px;align-items:flex-start;background:var(--info);color:var(--info-ink);border-radius:16px;padding:12px 14px;font-size:calc(15px*var(--dt));min-width:0}
+.info svg{width:24px;height:24px;margin-top:1px}
+.info span{min-width:0}
+.ph{display:inline-flex;align-items:center;background:var(--warn);color:var(--warn-ink);border-radius:8px;padding:3px 9px;font-size:calc(13px*var(--dt));font-weight:700}
+.pcard{display:flex;gap:10px;align-items:center;border-radius:22px;padding:10px 12px 10px 10px;margin-bottom:12px;min-height:104px;min-width:0}
+.pcard .art{width:108px;flex:none;border-radius:16px;overflow:hidden;display:block;aspect-ratio:1.4}
+.pcard .art img{width:100%;height:100%;object-fit:cover;display:block}
+.pcard .tx{min-width:0;flex:1}
+.pcard h4{margin:0 0 2px;font:800 calc(19px*var(--dt))/1.15 var(--font-display);color:var(--ink)}
+.pcard p{margin:0;font-size:calc(14px*var(--dt));line-height:1.3;color:var(--ink)}
+.go{flex:none;width:44px;height:44px;border-radius:22px;display:grid;place-items:center;background:var(--surface);color:var(--navy)}
+.go svg{width:20px;height:20px}
+.p-pas{background:var(--pas)} .p-asp{background:var(--asp)} .p-adhd{background:var(--adhd)} .p-oth{background:var(--oth)}
+.plus{width:64px;height:64px;border-radius:32px;background:#76849F;color:#fff;display:grid;place-items:center;margin:0 20px}
+.plus svg{width:30px;height:30px}
+.primary,.second{display:flex;align-items:center;justify-content:center;gap:8px;min-height:54px;border-radius:27px;font:700 calc(17px*var(--dt)) var(--font-body);width:100%;text-align:center}
+.primary{background:var(--navy);color:var(--on-navy)}
+.second{background:var(--surface);color:var(--navy);border:2px solid var(--navy)}
+.primary svg,.second svg{width:20px;height:20px}
+.dots{display:flex;gap:6px;justify-content:center}
+.dots i{width:8px;height:8px;border-radius:4px;background:var(--track)} .dots i.on{width:24px;background:var(--navy)}
+.bar{height:8px;border-radius:4px;background:var(--track);overflow:hidden} .bar b{display:block;height:100%;border-radius:4px;background:var(--navy)}
+.glist{background:var(--surface);border-radius:16px;margin-bottom:14px;overflow:hidden}
+.glist>div{display:flex;gap:12px;align-items:center;min-height:56px;padding:8px 14px;font-size:calc(16px*var(--dt));min-width:0;position:relative}
+.glist>div+div::before{content:"";position:absolute;left:14px;right:0;top:0;height:.5px;background:var(--line)}
+.glist>div.th{padding-left:10px}
+.glist>div.th+div.th::before{left:68px}
+.glist>div>div{min-width:0}
+.glist h5{margin:0;font:600 calc(16px*var(--dt))/1.2 var(--font-body)}
+.glist svg.i{color:var(--navy)}
+.th img{width:48px;height:36px;border-radius:8px;object-fit:cover;flex:none;background:#fff}
+.chev{width:16px;height:16px;color:var(--ink2);margin-left:auto;opacity:.7}
+.gh{font-size:calc(13px*var(--dt));font-weight:600;color:var(--ink2);text-transform:uppercase;letter-spacing:.03em;margin:16px 14px 6px}
+.pt{display:flex;gap:12px;align-items:center;background:var(--bg);border-radius:14px;padding:10px 14px;min-height:56px;font-size:calc(16px*var(--dt));min-width:0}
+.pt .ck{width:28px;height:28px;border-radius:14px;background:var(--c);color:var(--c-ink);display:grid;place-items:center;flex:none}
+.pt .ck svg{width:16px;height:16px}
+.pt span{min-width:0}
+.pill{font-size:calc(13px*var(--dt));font-weight:700;border-radius:10px;padding:3px 9px;display:inline-block;white-space:nowrap}
+.pill.done,.pill.ok{background:var(--c);color:var(--c-ink)} .pill.wip,.pill.part{background:var(--b);color:var(--b-ink)} .pill.new{background:var(--surface2);color:var(--ink2)} .pill.bad{background:var(--a);color:var(--a-ink)}
+.let{width:36px;height:36px;border-radius:18px;display:grid;place-items:center;font:800 17px var(--font-display);flex:none}
+.l-a{background:var(--a);color:var(--a-ink)} .l-b{background:var(--b);color:var(--b-ink)} .l-c{background:var(--c);color:var(--c-ink)} .l-d{background:var(--d);color:var(--d-ink)}
+.opt{display:flex;gap:12px;align-items:center;background:var(--surface);border-radius:18px;padding:8px 14px 8px 8px;min-height:56px;margin-bottom:8px;box-shadow:var(--shadow);font-size:calc(16px*var(--dt));line-height:1.25;min-width:0}
+.opt>div{min-width:0}
+.opt .chev{margin-left:auto}
+.opt.sel{outline:3px solid var(--navy)}
+.hero{border-radius:18px;overflow:hidden;margin:8px 0 10px;flex:none}
+.hero img{display:block;width:100%;height:auto}
+.segc{display:flex;background:var(--track);border-radius:9px;padding:2px;margin:0 0 12px}
+.segc span{flex:1;min-height:44px;display:flex;align-items:center;justify-content:center;border-radius:7px;font-size:calc(14px*var(--dt));font-weight:600;color:var(--ink);text-align:center}
+.segc span.on{background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.18);font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sc{background:var(--surface);border-radius:18px;padding:6px 6px 10px;box-shadow:var(--shadow);min-width:0;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.ti{width:100%;border-radius:13px;overflow:hidden;background:#fff;aspect-ratio:1.75;display:flex;align-items:center;justify-content:center}
+.ti img{width:100%;height:100%;object-fit:contain;display:block}
+.sc h5{margin:0 4px;font:700 calc(15px*var(--dt))/1.2 var(--font-body)}
+.sc .pill{margin:0 4px}
+.tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.tile{background:var(--surface);border-radius:16px;padding:10px;box-shadow:var(--shadow);min-width:0}
+.tile b{display:block;font:800 calc(26px*var(--dt))/1.1 var(--font-display);color:var(--navy)}
+.tile span{font-size:calc(13px*var(--dt));color:var(--ink2);line-height:1.2;display:block}
+.hero-navy{background:var(--navy);color:var(--on-navy);border-radius:24px;padding:18px;margin:6px 0 14px}
+.hero-navy .row2{display:flex;gap:12px;align-items:center}
+.hero-navy img{width:84px;height:62px;border-radius:12px;object-fit:cover;flex:none;background:#fff}
+.hero-navy .bar{background:rgba(127,127,127,.35)} .hero-navy .bar b{background:var(--on-navy)}
+.hero-navy h4{margin:2px 0 2px;font:800 calc(24px*var(--dt))/1.15 var(--font-display)}
+.hero-navy p{margin:0 0 12px;font-size:calc(15px*var(--dt))}
+.hero-navy .go{background:var(--on-navy);color:var(--navy)}
+.sech{font:800 calc(19px*var(--dt)) var(--font-display);margin:16px 0 8px}
+.fb{background:var(--surface);border-radius:20px;padding:14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.fb h4{margin:0 0 6px;font:800 calc(18px*var(--dt)) var(--font-display);display:flex;align-items:center;gap:8px}
+.fb h4 svg{width:22px;height:22px;color:var(--navy)}
+.fb p{margin:6px 0 0;font-size:calc(15px*var(--dt));color:var(--ink)}
+.meter{display:flex;gap:6px;margin:8px 0 4px}
+.meter i{flex:1;height:10px;border-radius:5px;background:var(--track)}
+.meter i.a{background:var(--a-ink);opacity:.35} .meter i.b{background:var(--b-ink);opacity:.35} .meter i.c{background:var(--c-ink);opacity:.35}
+.meter i.sel{opacity:1}
+.mlab{display:flex;justify-content:space-between;font-size:calc(12px*var(--dt));color:var(--ink2);gap:4px}
+.stack{display:flex;gap:10px;flex-direction:column;margin-top:auto;padding-bottom:10px;flex:none}
+.logo{display:flex;flex-direction:column;align-items:center;gap:8px;margin:10px 0 14px}
+.dim{position:absolute;inset:0;background:rgba(0,0,0,.38);z-index:40}
+.sheet{position:absolute;inset:auto 0 0 0;background:var(--surface);border-radius:28px 28px 0 0;padding:8px 20px 40px;z-index:41;box-shadow:0 -8px 30px rgba(0,0,0,.2)}
+.grab{width:36px;height:5px;border-radius:3px;background:var(--track);margin:0 auto 14px}
+.q{margin:0;padding-left:20px;display:grid;gap:8px;max-width:78ch}
+.chk{width:100%;border-collapse:collapse;font-size:14px;display:block;overflow-x:auto}
+.chk th,.chk td{text-align:left;padding:6px 14px 6px 0;border-bottom:1px solid #E2DDD3;white-space:nowrap}
+@media (max-width:900px){
+  .layout{grid-template-columns:minmax(0,1fr);gap:16px}
+  .side{position:static;min-height:0;flex-direction:row;flex-wrap:wrap;align-items:center;padding:10px;border-radius:22px;gap:4px}
+  .brand{padding:0 8px;font-size:18px}
+  .side a{min-height:44px;padding:0 10px}
+  .tag{display:none}
+}
+@media (max-width:420px){.row{justify-content:center}.item figcaption{padding:0}.top{align-items:flex-start;flex-direction:column}}
+@media (prefers-reduced-motion:no-preference){.item{transition:transform .2s}.item:hover{transform:translateY(-3px)}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8CC4F7"/><stop offset="1" stop-color="#5B9BEA"/></linearGradient>
+<linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C4B8F6"/><stop offset="1" stop-color="#9482E6"/></linearGradient>
+<symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11 12 3.5 20.5 11M5.5 9.5V20h5v-6h3v6h5V9.5"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="3" width="15" height="18" rx="3.5"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 20v-7M12 20V5M19 20v-10"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.6" r=".6" fill="currentColor"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 18h5M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3-5.6-3-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></symbol>
+<symbol id="i-retry" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5C7 4.5 10 5 12 6.5c2-1.5 5-2 8-1v13c-3-1-6-.5-8 1-2-1.5-5-2-8-1zM12 6.5v13"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="3"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="3"/><path d="M4.5 7.5 12 13l7.5-5.5"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-person" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21C3.5 15 1.5 10 5 6.5 7.5 4 11 5 12 7.5 13 5 16.5 4 19 6.5c3.5 3.5 1.5 8.5-7 14.5z"/></symbol>
+<symbol id="i-pal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 15c1 1.5 2.4 2 4 2s3-.5 4-2"/></symbol>
+</defs>
+</svg>
+
+<div class="layout">
+  <aside class="side" aria-label="Navigace prezentace">
+    <div class="brand" id="brandSide"></div>
+    <a href="#ds" data-go="ds">Design systém</a>
+    <a href="#g0" data-go="g0">1 Start</a>
+    <a href="#g1" data-go="g1">2 Domů a výběr</a>
+    <a href="#g2" data-go="g2">3 Trénink</a>
+    <a href="#g3" data-go="g3">4 Záložky</a>
+    <a href="#rozh" data-go="rozh">Rozhodnutí</a>
+  </aside>
+
+<div class="wrap">
+  <header class="top">
+    <span id="brandTop"></span>
+    <div>
+      <div class="eyebrow">Hi-fi mockup · iOS · učitel → dítě</div>
+      <h1>INKLUEM</h1>
+    </div>
+  </header>
+  <p style="max-width:62ch;color:var(--pagetext2);margin:10px 0 0">Trenažér krizových a každodenních situací pro učitele a asistenty. Krátký scénář, reakce A až D, okamžitá zpětná vazba a metodické vysvětlení, možnost zopakovat.</p>
+  <div class="notice"><b>Všechny odborné texty jsou zástupné.</b> Popisy situací, zpětná vazba a metodická vysvětlení čekají na schválení odborníka. Čísla ve výsledcích jsou ukázková data.</div>
+
+  <section id="ds">
+    <h2>Design systém</h2>
+    <p class="lead">Teplé světlé pozadí, tmavě modrý akcent, pastelové karty podle profilu. Aplikace je výchozí světlá, tmavý režim je volitelný.</p>
+    <div class="ds">
+      <div class="card"><h3>Barvy</h3><div class="sw" id="sw"></div><div class="darkpanel dark"><div class="sw" id="swd"></div></div><p class="fn2">Nahoře světlý režim, dole tmavý.</p></div>
+      <div class="card type"><h3>Písmo (Dynamic Type)</h3>
+        <div><span style="font:800 34px/1.1 var(--font-display);color:var(--pagetext)">Large Title</span><span>34 / 800</span></div>
+        <div><span style="font:800 26px/1.1 var(--font-display);color:var(--pagetext)">Title</span><span>26 / 800</span></div>
+        <div><b style="font:600 17px var(--font-body)">Headline</b><span>17 / 600</span></div>
+        <div><span style="font:16px var(--font-body);color:var(--pagetext)">Body, text scénáře</span><span>16 / 400</span></div>
+        <div><span style="font:13px var(--font-body)">Footnote, popisky</span><span>13 / 400</span></div>
+        <p class="fn2">Nadpisy zaoblené (SF Pro Rounded), text systémový (SF Pro). Přepínač Velikost textu škáluje celou aplikaci.</p>
+      </div>
+      <div class="card"><h3>Logo</h3><div class="logos"><div style="background:#17243D;color:#fff" id="lgDark"></div><div style="background:#fff;color:#1B2A41;border:1px solid #E2DDD3" id="lgLight"></div></div></div>
+      <div class="card"><h3>Ikony (styl SF Symbols)</h3><div class="icons" id="icons"></div><p class="fn2">Vlastní sada s jednotnou tloušťkou čáry. V aplikaci SF Symbols.</p></div>
+    </div>
+  </section>
+
+  <section id="flow-sec">
+    <h2>Screen flow</h2>
+    <p class="lead">Profil se volí první, vede pořadím situací a ukládá postup. Každý profil má vlastní verzi téže situace. Spodní lišta: Domů, Scénáře, Mé výsledky, O aplikaci.</p>
+    <div class="tools"><span class="lbl">Velikost textu</span>
+      <button class="mini" type="button" data-dt="1" aria-pressed="true">Standard</button>
+      <button class="mini" type="button" data-dt="1.2" aria-pressed="false">Větší</button>
+      <button class="mini" type="button" data-dt="1.4" aria-pressed="false">Největší</button>
+      <span class="lbl" style="margin-left:12px">Režim</span>
+      <button class="mini" type="button" id="allDark" aria-pressed="false">Všechny tmavé</button></div>
+    <p class="fn2" style="margin-bottom:0">Při větším textu se obrazovka v aplikaci rolluje. Rám ukazuje jen první část.</p>
+    <div id="flow"></div>
+  </section>
+
+  <section id="rozh">
+    <h2>Rozhodnutí a otevřené otázky</h2>
+    <ol class="q">
+      <li><b>Profily:</b> PAS, Aspergerův syndrom, ADHD, Jiná oblast. Potvrzeno.</li>
+      <li><b>Hodnocení reakce:</b> stupnice vhodnosti (vhodná, částečně vhodná, nevhodná) plus vysvětlení. Texty zůstávají zástupné.</li>
+      <li><b>Zkusit znovu:</b> každý pokus se ukládá, Mé výsledky ukazují jednotlivé pokusy.</li>
+      <li><b>Ukládání:</b> bez účtu jen v telefonu, po přihlášení i v účtu. Stav je vidět v Mých výsledcích a v O aplikaci.</li>
+      <li><b>Otevřené:</b> co přesně obsahuje profil „Jiná oblast“.</li>
+    </ol>
+  </section>
+</div>
+</div>
+
+<script>/*IMG*/</script>
+<script>
+/* ---------- logo (překresleno jako SVG) ---------- */
+const logo=(s,navyGap)=>`<svg width="${s}" height="${s}" viewBox="0 0 48 48" role="img" aria-label="INKLUEM"><circle cx="16" cy="12" r="6.5" fill="#9EE0EA"/><circle cx="32" cy="12" r="6.5" fill="#B9D8F6"/><path d="M3 44V33c0-6 4-10 10-10 6 0 10 4 11 10v11z" fill="url(#lg1)"/><path d="M45 44V33c0-6-4-10-10-10-6 0-10 4-11 10v11z" fill="url(#lg2)"/><path d="M18 44v-6a6 6 0 0 1 12 0v6z" fill="${navyGap||'#17243D'}"/></svg>`;
+document.getElementById('brandSide').innerHTML=logo(40)+'<span>INKLUEM</span>';
+document.getElementById('brandTop').innerHTML=logo(64,'#E3E8F0');
+document.getElementById('lgDark').innerHTML=logo(44)+'<span>INKLUEM</span>';
+document.getElementById('lgLight').innerHTML=logo(44,'#fff')+'<span>INKLUEM</span>';
+
+const img=(k,alt)=>`<img src="${IMG[k][0]}" width="${IMG[k][1]}" height="${IMG[k][2]}" alt="${alt||''}">`;
+const ic=(n,c)=>`<svg class="ic ${c||''}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+
+/* ---------- data ---------- */
+const PROFILES=[
+ {n:'PAS',d:'Jiný způsob vnímání světa, specifické potřeby a reakce na podněty.',cls:'p-pas',k:'prof_pas'},
+ {n:'Aspergerův syndrom',d:'Silné stránky, citlivost na změny a potřeba jasných pravidel.',cls:'p-asp',k:'prof_asp'},
+ {n:'ADHD',d:'Impulzivita, neklid, obtížná regulace pozornosti a emocí.',cls:'p-adhd',k:'prof_adhd'},
+ {n:'Jiná oblast',d:'Např. úzkosti, poruchy chování, senzorické zpracování apod.',cls:'p-oth'}
+];
+const SIT=[
+ {n:'Agresivita a frustrace',st:'done',k:'t1'},{n:'Výbuch hněvu',st:'done',k:'t2'},{n:'Impulzivita',st:'done',k:'t3'},
+ {n:'Posměch a vyčlenění',st:'new',k:'t4'},{n:'Změna režimu',st:'new',k:'t5'},{n:'Úzkost',st:'new',k:'t6'},
+ {n:'Odmítnutí úkolu',st:'wip',k:'t7'},{n:'Konflikt s vrstevníkem',st:'new',k:'t8'},{n:'Senzorické přetížení',st:'new',k:'t9'},{n:'Návrat do klidu',st:'new',k:'t10'}
+];
+const ST={done:['Hotovo','done'],wip:['Rozpracováno','wip'],new:['Nové','new']};
+
+/* ---------- bloky ---------- */
+const sb=()=>`<div class="island"></div><div class="sb"><span>9:41</span><i><svg width="18" height="12" viewBox="0 0 18 12"><path d="M1 8.5h2.4v2.5H1zM5.4 6h2.4v5H5.4zM9.8 3.5h2.4V11H9.8zM14.2 1h2.4v10h-2.4z" fill="currentColor"/></svg><svg width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 11.3 6.2 9a3.3 3.3 0 0 1 4.6 0zM3.7 6.6a6.7 6.7 0 0 1 9.6 0l-1.3 1.3a4.9 4.9 0 0 0-7 0zM1.2 4.1a10.2 10.2 0 0 1 14.6 0l-1.3 1.3a8.4 8.4 0 0 0-12 0z" fill="currentColor"/></svg><svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="22" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="19" height="9" rx="2.5" fill="currentColor"/><path d="M24 4.5v4c.9-.3 1.6-1.1 1.6-2s-.7-1.7-1.6-2z" fill="currentColor" opacity=".45"/></svg></i></div>`;
+const TABS=[['home','Domů'],['doc','Scénáře'],['chart','Mé výsledky'],['info','O aplikaci']];
+const tabs=a=>`<div class="tabs">${TABS.map((t,i)=>`<div class="${i===a?'on':''}">${ic(t[0])}<span>${t[1]}</span></div>`).join('')}</div><div class="hi"></div>`;
+const nav=(back,right,title)=>`<div class="nav"><span class="nbtn">${back?ic('back'):''}</span>${title?`<span class="ct">${title}</span>`:''}${right||''}</div>`;
+const phone=inner=>`<div class="phone"><div class="bezel"><div class="scr">${sb()}${inner}</div></div></div>`;
+const dots=(n,on)=>`<div class="dots">${Array.from({length:n},(_,i)=>`<i class="${i===on?'on':''}"></i>`).join('')}</div>`;
+const infoBox=(t,i)=>`<div class="info">${ic(i||'bulb')}<span>${t}</span></div>`;
+const tile=(s,pill)=>`<div class="sc"><div class="ti">${img(s.k,s.n)}</div><h5>${s.n}</h5>${pill?`<span class="pill ${ST[s.st][1]}">${ST[s.st][0]}</span>`:''}</div>`;
+const store='Bez účtu se výsledky ukládají jen v tomto telefonu. Po přihlášení i v účtu.';
+
+/* ---------- obrazovky ---------- */
+const S={};
+const onb1=()=>`<div class="body full">${nav(false)}
+  <div style="display:flex;align-items:center;gap:10px;margin:2px 0 14px">${logo(44,'var(--bg)')}<b style="font:800 22px var(--font-display);letter-spacing:.04em">INKLUEM</b></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">${PROFILES.slice(0,3).map(p=>`<div class="${p.cls}" style="border-radius:16px;overflow:hidden;aspect-ratio:1.1">${img(p.k,'').replace('<img','<img style="width:100%;height:100%;object-fit:cover;display:block"')}</div>`).join('')}</div>
+  <div class="hero" style="margin:10px 0 0">${img('hero_pas','')}</div>
+  <h1 class="lt" style="margin-top:20px">Trénuj reakce na situace ve třídě</h1>
+  <p class="sub">Krátký scénář. Volba reakce. Okamžitá zpětná vazba.</p>
+  <div style="margin-top:auto;display:grid;gap:18px;padding-bottom:18px">${dots(2,0)}<div class="primary">Začít ${ic('arrow')}</div></div></div>`;
+S.onb1=()=>phone(onb1());
+S.onb2=()=>phone(`${onb1()}<div class="dim"></div><div class="sheet"><div class="grab"></div>
+  <div style="display:flex;gap:12px;align-items:center;margin-bottom:6px"><span style="width:48px;height:48px;border-radius:16px;background:var(--info);color:var(--info-ink);display:grid;place-items:center;flex:none">${ic('info').replace('class="ic ','style="width:28px;height:28px" class="ic ')}</span><h1 class="t2" style="margin:0">Profil není diagnóza</h1></div>
+  <p class="sub" style="margin:8px 0 12px">Profil jen vybere scénáře, které se vám hodí.</p>
+  <div style="display:grid;gap:8px;margin-bottom:16px">
+   <div class="pt"><span class="ck">${ic('check')}</span><span>Aplikace nikoho nediagnostikuje.</span></div>
+   <div class="pt"><span class="ck">${ic('check')}</span><span>Každé dítě je jiné.</span></div>
+   <div class="pt"><span class="ck">${ic('check')}</span><span>Profil můžete kdykoli změnit.</span></div></div>
+  <div class="primary">Rozumím</div></div>`);
+S.home=()=>phone(`<div class="body">${nav(false)}
+  <h1 class="lt">Domů</h1><p class="sub">Dobrý den. Pokračujte, kde jste skončili.</p>
+  <div class="hero-navy"><div class="fn" style="color:inherit;text-transform:uppercase;letter-spacing:.06em;font-weight:700;opacity:.9">Pokračovat</div>
+   <div class="row2"><div style="flex:1;min-width:0"><h4>Odmítnutí úkolu</h4><p style="margin-bottom:0">Profil PAS · situace 7 z 10</p></div>${img('t7','')}</div>
+   <div style="display:flex;gap:12px;align-items:center;margin-top:12px"><div class="bar" style="flex:1"><b style="width:70%"></b></div><span class="go">${ic('arrow')}</span></div></div>
+  <div class="glist"><div><span class="nbtn" style="background:var(--info);width:44px;height:44px;border-radius:12px">${ic('plus')}</span><div><h5>Nový trénink</h5><span class="fn">Vybrat profil a situaci</span></div>${ic('chev','chev')}</div></div>
+  <div class="sech" style="margin-top:6px">Tento týden</div>
+  <div class="tiles"><div class="tile"><b>7</b><span>spuštěných scénářů</span></div><div class="tile"><b>4</b><span>hotové situace</span></div><div class="tile"><b>2</b><span>zkusit znovu</span></div></div>
+  ${infoBox('Profil slouží jen k výběru scénáře. Není to diagnóza.','info')}</div>${tabs(0)}`);
+S.profile=()=>phone(`<div class="body">${nav(true)}
+  <div class="kick">KROK 1 Z 2</div>
+  <h1 class="t2">S jakým profilem chcete trénovat?</h1>
+  <p class="sub" style="margin-bottom:10px">Profil slouží jen k výběru scénáře. Není to diagnóza.</p>
+  ${PROFILES.map(p=>`<div class="pcard ${p.cls}"><span class="art" ${p.k?'':'style="display:grid;place-items:center"'}>${p.k?img(p.k,''):`<span class="plus">${ic('plus')}</span>`}</span><div class="tx"><h4>${p.n}</h4><p>${p.d}</p></div><span class="go">${ic('arrow')}</span></div>`).join('')}</div>${tabs(0)}`);
+S.situations=()=>phone(`<div class="body">${nav(true,`<span class="pill new" style="margin-right:8px">Profil PAS</span>`)}
+  <div class="kick">KROK 2 Z 2</div>
+  <h1 class="t2">Vyberte situaci</h1>
+  <div style="display:flex;gap:12px;align-items:center;margin:0 0 12px"><div class="bar" style="flex:1"><b style="width:30%"></b></div><span class="fn" style="font-weight:700">3 z 10 hotovo</span></div>
+  <div class="grid2">${SIT.slice(0,6).map(s=>tile(s,true)).join('')}</div></div>${tabs(0)}`);
+S.scenario=()=>phone(`<div class="body full">${nav(true,`<span class="nbtn">${ic('x')}</span>`,'Profil PAS')}
+  <div style="display:flex;gap:10px;align-items:center;margin-bottom:6px"><div class="dots" style="flex:1;justify-content:flex-start"><i class="on"></i><i></i><i></i></div><span class="fn" style="font-weight:700">Situace 7 z 10</span></div>
+  ${infoBox('Profil slouží jen k výběru scénáře. Není to diagnóza.','info')}
+  <div class="hero">${img('hero_pas','Dítě si zakrývá uši u lavice, vedle stojí dospělý')}</div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:2px"><b style="font-size:calc(17px*var(--dt))">Situace</b><span class="ph">Zástupný text</span></div>
+  <p style="margin:0 0 6px;font-size:calc(15px*var(--dt))">Dítě si zakryje uši, začne křičet a odmítá pokračovat v úkolu. V místnosti je rušno.</p>
+  <div style="font:700 calc(17px*var(--dt)) var(--font-body);margin:2px 0 6px">Co uděláte?</div>
+  <div class="opt"><span class="let l-a">A</span>Přitlačit na dokončení úkolu.${ic('chev','chev')}</div>
+  <div class="opt"><span class="let l-b">B</span>Ignorovat chování.${ic('chev','chev')}</div>
+  <div class="opt"><span class="let l-c">C</span>Snížit podněty a dát prostor ke zklidnění.${ic('chev','chev')}</div>
+  <div class="opt"><span class="let l-d">D</span>Poslat dítě ze třídy.${ic('chev','chev')}</div></div>`);
+S.feedback=()=>phone(`<div class="body full">${nav(false,`<span class="nbtn">${ic('x')}</span>`,'Zpětná vazba')}
+  <div class="opt sel" style="margin-top:0;flex:none"><span class="let l-c">C</span><div><div class="fn">Vaše volba</div>Snížit podněty a dát prostor ke zklidnění.</div></div>
+  <div class="fb"><h4 style="justify-content:space-between"><span>Vhodnost reakce</span><span class="pill ok">Vhodná</span></h4>
+   <div class="meter"><i class="a"></i><i class="b"></i><i class="c sel"></i></div><div class="mlab"><span>Nevhodná</span><span>Částečně</span><span>Vhodná</span></div><span class="ph" style="margin-top:8px">Zástupný text</span></div>
+  <div class="fb" style="background:var(--info);box-shadow:none"><h4 style="color:var(--info-ink)">${ic('bulb')}Metodické vysvětlení</h4><span class="ph">Zástupný text</span><p style="color:var(--info-ink)">Sem přijde zpětná vazba a krátké metodické vysvětlení. Napíše odborník.</p></div>
+  <div class="info" style="flex:none"><svg class="ic" style="width:24px;height:24px"><use href="#i-star"/></svg><span>Tip: každá situace je jiná. Zástupný text.</span></div>
+  <div class="stack"><div class="primary">Další situace ${ic('arrow')}</div><div class="second">${ic('retry')} Zkusit znovu</div></div></div>`);
+S.results=()=>phone(`<div class="body">${nav(false)}
+  <h1 class="lt">Mé výsledky</h1><div style="margin-bottom:10px"><span class="ph">Ukázková data</span></div>
+  <div class="tiles"><div class="tile"><b>7</b><span>spuštěných scénářů</span></div><div class="tile"><b>9</b><span>pokusů celkem</span></div><div class="tile"><b>3</b><span>opakování</span></div></div>
+  ${infoBox(store,'info')}
+  <div class="gh">Postup podle profilu</div>
+  <div class="glist">${[['PAS',4],['Aspergerův syndrom',1],['ADHD',2]].map(r=>`<div style="display:block"><div style="display:flex;justify-content:space-between;gap:8px;font-size:calc(15px*var(--dt));font-weight:600;margin-bottom:6px"><span>${r[0]}</span><span class="fn" style="font-weight:700;white-space:nowrap">${r[1]} z 10</span></div><div class="bar"><b style="width:${r[1]*10}%"></b></div></div>`).join('')}</div>
+  <div class="gh">Poslední pokusy</div>
+  <div class="glist">
+   <div class="th">${img('t7','')}<div><h5>Odmítnutí úkolu</h5><span class="fn">PAS · pokus 2 · C</span></div><span class="pill ok" style="margin-left:auto">Vhodná</span></div>
+   <div class="th">${img('t7','')}<div><h5>Odmítnutí úkolu</h5><span class="fn">PAS · pokus 1 · A</span></div><span class="pill bad" style="margin-left:auto">Nevhodná</span></div>
+   <div class="th">${img('t3','')}<div><h5>Impulzivita</h5><span class="fn">ADHD · pokus 1 · B</span></div><span class="pill part" style="margin-left:auto">Částečně</span></div></div></div>${tabs(2)}`);
+S.library=()=>phone(`<div class="body" style="padding-top:50px">
+  <div class="segc"><span class="on">PAS</span><span>Asperger</span><span>ADHD</span><span>Jiná</span></div>
+  <p class="fn" style="margin:0 0 10px">10 situací. Každý profil má vlastní verzi.</p>
+  <div class="grid2">${SIT.slice(0,10).map(s=>tile(s,false)).join('')}</div></div>
+  <div class="navblur">Scénáře</div>${tabs(1)}`);
+S.about=()=>phone(`<div class="body">${nav(false)}
+  <div class="logo">${logo(76,'var(--bg)')}<h1 class="lt" style="margin:0;letter-spacing:.04em">INKLUEM</h1><span class="fn">Verze 0.1 · mockup</span></div>
+  ${infoBox('Profil není diagnóza. Slouží jen k výběru scénáře.','info')}
+  <div class="gh">Účet</div>
+  <div class="glist">
+   <div>${ic('person','i')}<div><h5>Nepřihlášeno</h5><span class="fn">Výsledky jsou jen v tomto telefonu</span></div>${ic('chev','chev')}</div>
+   <div>${ic('lock','i')}<span>Ochrana soukromí</span>${ic('chev','chev')}</div></div>
+  <div class="gh">Obsah</div>
+  <div class="glist">
+   <div>${ic('book','i')}<span>Metodické zázemí</span><span class="ph" style="margin-left:auto">Doplnit</span></div>
+   <div>${ic('doc','i')}<span>Texty scénářů</span><span class="ph" style="margin-left:auto">Zástupné</span></div>
+   <div>${ic('mail','i')}<span>Kontakt</span>${ic('chev','chev')}</div></div></div>${tabs(3)}`);
+
+const GROUPS=[
+ ['Start','Poprvé v aplikaci. Důležité sdělení hned na začátku, jako sheet nad úvodem.',[['onb1','Úvod','Co aplikace dělá, jednou větou.','pdf','Ilustrace z PDF, logo překresleno'],['onb2','Profil není diagnóza','Bottom sheet s grabberem.','add','Doplněno, bez ilustrace']]],
+ ['Domů a výběr','Pokračovat tam, kde jste skončili, nebo začít nový trénink.',[['home','Domů','Karta Pokračovat je nahoře.','pdf','Miniatura z PDF'],['profile','Výběr profilu','Krok 1 z 2. Čtyři profily.','pdf','Ilustrace z PDF, ikona Jiná oblast doplněna'],['situations','Situace pro profil','Krok 2 z 2. Dlaždice 10 situací se stavem.','pdf','Ilustrace z PDF']]],
+ ['Trénink','Jedna úloha na obrazovku. Situace a reakce A až D jsou z PDF.',[['scenario','Scénář','Situace, A/B/C/D. Text je zástupný.','pdf','Ilustrace z PDF'],['feedback','Zpětná vazba','Stupnice vhodnosti, vysvětlení, Zkusit znovu.','add','Doplněno, bez ilustrace']]],
+ ['Záložky','Spodní lišta: Domů, Scénáře, Mé výsledky, O aplikaci.',[['library','Scénáře','Segmentovaný přepínač profilu, malý titulek po rolování.','pdf','Ilustrace z PDF'],['results','Mé výsledky','Každý pokus zvlášť, stav ukládání.','pdf','Miniatury z PDF'],['about','O aplikaci','Účet, soukromí, metodika.','add','Doplněno, logo překresleno']]]
+];
+document.getElementById('flow').innerHTML=GROUPS.map((g,gi)=>`<div class="group" id="g${gi}"><h3>${gi+1}. ${g[0]}</h3><p class="lead">${g[1]}</p><div class="row">${g[2].map(s=>`<figure class="item">${S[s[0]]()}<figcaption><b>${s[1]}</b>${s[2]}</figcaption><button class="mini dm" type="button" aria-pressed="false">Tmavý režim</button></figure>`).join('')}</div></div>`).join('');
+
+/* ---------- design systém ---------- */
+const SW=[['--navy','Navy akcent','--on-navy'],['--bg','Pozadí','--ink'],['--surface','Karta','--ink'],['--info','Info box','--info-ink'],['--pas','PAS','--pas-ink'],['--asp','Asperger','--asp-ink'],['--adhd','ADHD','--adhd-ink'],['--oth','Jiná oblast','--oth-ink'],['--a','Reakce A','--a-ink'],['--b','Reakce B','--b-ink'],['--c','Reakce C','--c-ink'],['--d','Reakce D','--d-ink']];
+const swHtml=SW.map(s=>`<div style="background:var(${s[0]});color:var(${s[2]});${s[0]==='--bg'||s[0]==='--surface'?'border:1px solid var(--line)':''}"><span>${s[1]}<small>${s[0]}</small></span></div>`).join('');
+document.getElementById('sw').innerHTML=swHtml;document.getElementById('swd').innerHTML=swHtml;
+document.getElementById('icons').innerHTML=['home','doc','chart','info','chev','arrow','bulb','star','retry','check','book','lock'].map(n=>`<div>${ic(n)}</div>`).join('');
+
+/* ---------- přepínače ---------- */
+(function(){
+  const flow=document.getElementById('flow');
+  document.querySelectorAll('[data-dt]').forEach(b=>b.addEventListener('click',()=>{
+    flow.style.setProperty('--dt',b.dataset.dt);
+    document.querySelectorAll('[data-dt]').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
+  }));
+  const set=(scr,on,btn)=>{scr.classList.toggle('dark',on);btn.setAttribute('aria-pressed',on?'true':'false');btn.textContent=on?'Světlý režim':'Tmavý režim'};
+  document.querySelectorAll('.item').forEach(it=>{const b=it.querySelector('.dm'),s=it.querySelector('.scr');b.addEventListener('click',()=>set(s,!s.classList.contains('dark'),b))});
+  const all=document.getElementById('allDark');
+  all.addEventListener('click',()=>{const on=all.getAttribute('aria-pressed')!=='true';all.setAttribute('aria-pressed',on?'true':'false');all.textContent=on?'Všechny světlé':'Všechny tmavé';document.querySelectorAll('.item').forEach(it=>set(it.querySelector('.scr'),on,it.querySelector('.dm')))});
+  document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const t=document.getElementById(a.dataset.go);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})}));
+})();
+</script>

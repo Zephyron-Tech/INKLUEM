@@ -1,0 +1,470 @@
+<title>INKLUEM wireframy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: page = intro, 4 variant bands (heading + notes + horizontal storyboard of 5 iPhone frames), open questions. Greyscale only. */
+:root {
+  --bg: #efefed;
+  --paper: #ffffff;
+  --ink: #1b1b1b;
+  --g1: #e4e4e2;
+  --g2: #b9b9b6;
+  --g3: #6f6f6c;
+  --frame: #2a2a2a;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161616; --paper: #242424; --ink: #ececea; --g1: #333331; --g2: #5a5a57; --g3: #a2a29f; --frame: #6a6a67;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161616; --paper: #242424; --ink: #ececea; --g1: #333331; --g2: #5a5a57; --g3: #a2a29f; --frame: #6a6a67;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font);
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  line-height: 1.45;
+}
+.wrap { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px; }
+h1 { font-size: 26px; margin: 0 0 6px; text-wrap: balance; }
+h2 { font-size: 20px; margin: 0; text-wrap: balance; }
+h3 { font-size: 12px; margin: 0 0 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--g3); }
+p { margin: 0; }
+.lead { max-width: 70ch; color: var(--g3); font-size: 15px; }
+.intro { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.box { background: var(--paper); border: 1px solid var(--g2); border-radius: 6px; padding: 14px 16px; min-width: 0; }
+.box ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.band { display: flex; flex-direction: column; gap: 14px; }
+.vhead { display: flex; flex-direction: column; gap: 4px; }
+.tag { font-family: var(--mono); font-size: 12px; color: var(--g3); }
+.structure { max-width: 78ch; font-size: 14px; }
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; counter-reset: n; padding: 0; margin: 0; list-style: none; }
+.notes li { counter-increment: n; display: flex; gap: 10px; font-size: 13.5px; background: var(--paper); border: 1px dashed var(--g2); border-radius: 6px; padding: 10px 12px; min-width: 0; }
+.notes li::before { content: counter(n); flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 12px; font-weight: 700; display: grid; place-items: center; margin-top: 1px; }
+.story { display: flex; gap: 18px; overflow-x: auto; padding: 6px 2px 14px; align-items: flex-start; }
+figure { margin: 0; flex: none; display: flex; flex-direction: column; gap: 8px; }
+figcaption { font-size: 12.5px; color: var(--g3); font-family: var(--mono); }
+.dev { position: relative; border: 3px solid var(--frame); border-radius: 34px; background: var(--paper); overflow: hidden; }
+.screen { zoom: .66; width: 390px; height: 800px; display: flex; flex-direction: column; font-size: 17px; background: var(--paper); }
+.sb { height: 50px; flex: none; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 30px 6px; font-size: 15px; font-weight: 600; position: relative; }
+.sb::after { content: ""; position: absolute; left: 50%; top: 10px; width: 110px; height: 30px; margin-left: -55px; border-radius: 16px; background: var(--ink); }
+.nav { height: 44px; flex: none; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 12px; font-size: 17px; }
+.nav b { font-weight: 600; }
+.nav span:last-child { text-align: right; }
+.body { flex: 1; min-height: 0; overflow: hidden; padding: 6px 16px 10px; display: flex; flex-direction: column; gap: 10px; position: relative; }
+.tabs { height: 83px; flex: none; border-top: 1px solid var(--g2); display: grid; grid-template-columns: repeat(4, 1fr); padding: 7px 4px 0; background: var(--paper); }
+.tab { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10.5px; color: var(--g3); }
+.tab i { width: 26px; height: 26px; border: 2px solid var(--g2); border-radius: 7px; }
+.tab.on { color: var(--ink); font-weight: 700; }
+.tab.on i { border-color: var(--ink); background: var(--ink); }
+.home { position: absolute; bottom: 8px; left: 50%; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; background: var(--ink); }
+.lt { font-size: 31px; line-height: 1.12; font-weight: 700; margin: 2px 0 0; text-wrap: balance; }
+.step { font-size: 13px; color: var(--g3); font-family: var(--mono); }
+.ph { color: var(--g3); font-size: 15px; font-style: italic; }
+.note { border: 1.5px solid var(--g2); border-radius: 12px; background: var(--g1); padding: 10px 12px; font-size: 14px; display: flex; gap: 10px; align-items: flex-start; }
+.note::before { content: "i"; flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--ink); font-size: 13px; font-weight: 700; display: grid; place-items: center; }
+.card { border: 1.5px solid var(--g2); border-radius: 14px; padding: 12px 14px; min-height: 60px; display: flex; align-items: center; gap: 12px; }
+.card .av { flex: none; width: 40px; height: 40px; border-radius: 10px; background: repeating-linear-gradient(135deg, var(--g1) 0 6px, var(--paper) 6px 12px); border: 1px solid var(--g2); }
+.card .tx { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.card .tx b { font-size: 16px; }
+.card .tx small { font-size: 12.5px; color: var(--g3); font-style: italic; }
+.chev::after { content: "›"; font-size: 24px; color: var(--g3); }
+.row { min-height: 48px; border-bottom: 1px solid var(--g1); display: flex; align-items: center; gap: 10px; font-size: 16px; }
+.row .dot { flex: none; width: 26px; height: 26px; border-radius: 7px; background: repeating-linear-gradient(135deg, var(--g1) 0 5px, var(--paper) 5px 10px); border: 1px solid var(--g2); }
+.row .grow { flex: 1; min-width: 0; }
+.row small { color: var(--g3); font-size: 12.5px; }
+.cue { text-align: center; color: var(--g3); font-size: 12.5px; font-family: var(--mono); }
+.img { height: 130px; flex: none; border: 1px solid var(--g2); border-radius: 12px; background: repeating-linear-gradient(135deg, var(--g1) 0 9px, var(--paper) 9px 18px); display: grid; place-items: center; font-family: var(--mono); font-size: 12px; color: var(--g3); }
+.opt { min-height: 52px; border: 1.5px solid var(--g2); border-radius: 12px; display: flex; align-items: center; gap: 10px; padding: 8px 12px; font-size: 15px; }
+.opt .l { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ink); font-weight: 700; font-size: 14px; display: grid; place-items: center; }
+.opt.sel { border-color: var(--ink); border-width: 2.5px; background: var(--g1); }
+.opt.sel .l { background: var(--ink); color: var(--paper); }
+.btn { min-height: 50px; border-radius: 13px; display: grid; place-items: center; font-weight: 600; font-size: 16px; border: 2px solid var(--ink); }
+.btn.pri { background: var(--ink); color: var(--paper); }
+.btn.sec { background: transparent; }
+.chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 14px; border-radius: 18px; border: 1.5px solid var(--g2); font-size: 14px; }
+.chip.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; background: var(--g1); border-radius: 9px; padding: 2px; font-size: 14px; }
+.seg span { min-height: 32px; display: grid; place-items: center; border-radius: 7px; }
+.seg span.on { background: var(--paper); font-weight: 600; box-shadow: 0 0 0 1px var(--g2); }
+.fb { border: 2px solid var(--ink); border-radius: 12px; padding: 10px 12px; font-size: 14.5px; }
+.sheetbg { position: absolute; inset: 0; background: color-mix(in srgb, var(--ink) 38%, transparent); }
+.sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--paper); border-radius: 22px 22px 0 0; border-top: 2px solid var(--ink); padding: 10px 16px 30px; display: flex; flex-direction: column; gap: 10px; }
+.grab { width: 40px; height: 5px; border-radius: 3px; background: var(--g2); margin: 0 auto; }
+.radio { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--g2); }
+.radio.on { border-color: var(--ink); background: radial-gradient(var(--ink) 0 45%, transparent 50%); }
+.mk { position: absolute; z-index: 5; width: 24px; height: 24px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 13px; font-weight: 700; display: grid; place-items: center; border: 2px solid var(--paper); font-style: normal; }
+.lbl { font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--g3); margin-top: 4px; }
+.q { max-width: 80ch; display: flex; flex-direction: column; gap: 8px; }
+.q ol { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; font-size: 14.5px; }
+.decision { display: flex; flex-direction: column; gap: 14px; border: 2px solid var(--ink); border-radius: 8px; padding: 18px; background: var(--paper); }
+.decision .box { background: var(--bg); }
+.subhead { display: flex; flex-direction: column; gap: 4px; }
+.subhead h2 { font-size: 17px; }
+.num { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ink); display: grid; place-items: center; font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.num.done { background: var(--ink); color: var(--paper); }
+.row.dim { color: var(--g3); }
+.row.dim .num { border-color: var(--g2); }
+.bar { height: 8px; border-radius: 4px; background: var(--g1); border: 1px solid var(--g2); overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--ink); }
+.prog { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: center; font-size: 13px; font-family: var(--mono); color: var(--g3); }
+.prog .bar { grid-column: 1 / -1; }
+.vnote { font-size: 13px; color: var(--g3); border-left: 3px solid var(--g2); padding-left: 8px; }
+.hero { border: 2px solid var(--ink); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.prow { display: flex; flex-direction: column; gap: 6px; padding: 8px 0; border-bottom: 1px solid var(--g1); font-size: 15px; }
+.prow small { color: var(--g3); font-family: var(--mono); font-size: 12.5px; }
+.empty { width: 84px; height: 84px; border-radius: 50%; border: 2px dashed var(--g2); margin: 0 auto; }
+.center { text-align: center; display: flex; flex-direction: column; gap: 10px; }
+.stick { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 16px 12px; background: linear-gradient(transparent, var(--paper) 45%); }
+.opt.long { align-items: flex-start; }
+.screen.big .opt { font-size: 21px; align-items: flex-start; }
+.screen.big .opt .ph { font-size: 21px; }
+.screen.big .lbl { font-size: 17px; }
+.screen.big .vnote { font-size: 17px; }
+.screen.big .nav { font-size: 20px; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>INKLUEM: wireframy flow</h1>
+    <p class="lead">Hrubé greyscale náčrty. Texty ve hranatých závorkách jsou popisky, ne obsah. Texty scénářů a metodická vysvětlení doplní odborník.</p>
+  </header>
+
+  <section class="intro">
+    <div class="box">
+      <h3>Co se zkoumá</h3>
+      <p style="font-size:14px">Cesta učitele: Profil, Situace, Scénář, Zpětná vazba, Mé výsledky. iPhone, režim učitel → dítě.</p>
+    </div>
+    <div class="box">
+      <h3>Osa variací</h3>
+      <p style="font-size:14px"><b>Jakou roli hraje profil dítěte ve flow.</b> Mění se, kolik kroků je před prvním scénářem a kde a jak se říká, že profil není diagnóza.</p>
+    </div>
+    <div class="box">
+      <h3>Drží se stejně ve všech</h3>
+      <ul>
+        <li>Spodní lišta: Domů, Scénáře, Mé výsledky, O aplikaci</li>
+        <li>Scénář krok po kroku: situace, volba A–D, zpětná vazba</li>
+        <li>Zpětná vazba nabízí Zkusit znovu a Další situace</li>
+        <li>10 situací podle PDF, 4 profily podle PDF</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="decision" id="rozhodnuti">
+    <span class="tag">kolo 2 · rozhodnutí</span>
+    <h2>Decision capture: varianta A, Profil jako brána</h2>
+    <div class="intro">
+      <div class="box">
+        <h3>Vybráno</h3>
+        <ul>
+          <li>Navigace z A: profil, pak situace pro profil, pak scénář.</li>
+          <li>Aplikace vede: doporučené pořadí situací, postup v Mých výsledcích, „Pokračovat“ na Domů.</li>
+          <li>Vedle vedené cesty je volná knihovna všech 10 situací na záložce Scénáře.</li>
+          <li>Obsahový model: každý profil má vlastní verzi téže situace (10 situací × 4 profily). Jde o obsah, navigace zůstává z A.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Co přitahuje</h3>
+        <ul>
+          <li>Aplikace slouží i ke školení doma a na workshopu, ne jen jako pomoc v krizi. Dva kroky před scénářem proto nevadí.</li>
+          <li>Učí se podle profilu, takže profil na začátku dává smysl.</li>
+          <li>Vedení a postup jako u Duolinga.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Zamítnuto</h3>
+        <ul>
+          <li><b>B</b>, situace první a profil jako filtr: profil by byl jen nepovinný, aplikace by nevedla.</li>
+          <li><b>C</b>, profil jako trvalé nastavení: skrývá volbu profilu za štítek, učení po profilech s vlastním postupem v něm není vidět.</li>
+          <li><b>D</b>, profil až uvnitř situace: navigace zamítnuta. Přebírá se z ní jen myšlenka verze situace pro každý profil.</li>
+          <li class="ph" style="font-size:13px">Důvody u B, C a D jsou odvozené z rozhodnutí výše, ne citované. Opravte, pokud nesedí.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Nová omezení</h3>
+        <ul>
+          <li>Použití individuální i skupinové na workshopu. Skupinový režim se zatím nenavrhuje.</li>
+          <li>Zachovat 4 profily z PDF, jen režim učitel → dítě, Mé výsledky v MVP, 10 situací z PDF.</li>
+          <li>Upozornění „profil není diagnóza“ na první obrazovce a u každého scénáře.</li>
+          <li>Nikde formulace „Dítě s …“. Jen název profilu.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="structure"><b>Brief pro hi-fi:</b> začít znovu od tohoto zápisu, ne úpravami wireframu. Struktura obrazovek níže je závazná, texty a vizuál ne.</p>
+  </section>
+
+  <div id="afull" class="wrap" style="gap:40px"></div>
+
+  <section class="vhead" style="border-top:2px solid var(--g2);padding-top:24px">
+    <span class="tag">kolo 1 · průzkum, beze změny</span>
+    <h2>Čtyři varianty role profilu</h2>
+    <p class="structure">Původní náčrty, ze kterých se vybíralo. Ponechané pro srovnání.</p>
+  </section>
+
+  <div id="bands" class="wrap" style="gap:56px"></div>
+
+  <section class="q">
+    <h2>Otázky</h2>
+    <h3>Vyřešeno v kole 2</h3>
+    <ol>
+      <li>Domů je vedená cesta (Pokračovat, doporučené pořadí). Scénáře jsou volná knihovna všech 10 situací.</li>
+      <li>„Dítě s ADHD“ a podobné formulace se nepoužívají, jen název profilu.</li>
+      <li>Aplikace je trénink a školení (doma, workshop), ne jen pomoc v krizi.</li>
+    </ol>
+    <h3>Otevřené</h3>
+    <ol>
+      <li>Kolik z 10 × 4 verzí scénářů bude v pilotu? Pokud ne všech 40, co uvidí učitel u situace bez verze pro svůj profil (stav na posledním řádku storyboardu)?</li>
+      <li>Co je uvnitř „Jiná oblast“? Vlastní verze situací, nebo obecné verze, nebo seznam podoblastí (úzkost, chování, senzorika)?</li>
+      <li>Slide MVP uvádí profil Běžný žák, mockup ne. Zmizel záměrně?</li>
+      <li>Skupinový režim na workshopu: jedna obrazovka a lektor, nebo každý na svém telefonu a společné hlasování? Zatím nenavrženo.</li>
+      <li>Kdo určí doporučené pořadí situací? Je stejné pro všechny profily?</li>
+      <li>Musí se jít popořadě (odemykání), nebo jde kteroukoli situaci spustit hned? Wireframe nechává vše otevřené.</li>
+      <li>Je u reakcí jedna správná, nebo škála (vhodná, částečně, nevhodná)? Od toho se odvíjí, zda Mé výsledky ukazují skóre a co znamená „profil dokončen“.</li>
+      <li>Co se ukládá a kde? Jen na zařízení, nebo účet (kvůli workshopu a více zařízením)? Bez jakýchkoli údajů o dítěti?</li>
+      <li>Dlouhý text scénáře: nechat spodní lištu „Vybrat reakci“, nebo stačí obyčejný scroll? Je limit 15 vět pevný?</li>
+      <li>Při změně profilu se postup předchozího profilu zachová? Wireframe počítá s postupem pro každý profil zvlášť.</li>
+    </ol>
+  </section>
+</div>
+
+<script>
+const esc = s => s;
+const TABS = ['Domů', 'Scénáře', 'Mé výsledky', 'O aplikaci'];
+const SIT = ['Agresivita a frustrace','Výbuch hněvu','Impulzivita','Posměch a vyčlenění','Změna režimu','Úzkost','Odmítnutí úkolu','Konflikt s vrstevníkem','Senzorické přetížení','Návrat do klidu'];
+const PROF = ['PAS','Aspergerův syndrom','ADHD','Jiná oblast'];
+
+const h = t => `<div class="lt">${t}</div>`;
+const step = t => `<div class="step">${t}</div>`;
+const ph = t => `<p class="ph">${t}</p>`;
+const note = t => `<div class="note"><span>${t}</span></div>`;
+const lbl = t => `<div class="lbl">${t}</div>`;
+const card = (t, s) => `<div class="card chev"><div class="av"></div><div class="tx"><b>${t}</b><small>${s}</small></div></div>`;
+const row = (t, sub, chev = true) => `<div class="row ${chev ? 'chev' : ''}"><div class="dot"></div><div class="grow">${t}${sub ? `<br><small>${sub}</small>` : ''}</div></div>`;
+const rows = (a, n) => a.slice(0, n).map(x => row(x)).join('') + (n < a.length ? `<div class="cue">… dalších ${a.length - n} (scroll)</div>` : '');
+const img = t => `<div class="img">${t}</div>`;
+const opts = sel => ['A','B','C','D'].map(l => `<div class="opt ${sel === l ? 'sel' : ''}"><span class="l">${l}</span><span class="ph" style="font-style:normal">[Reakce ${l}, zástupný text]</span></div>`).join('');
+const btn = (t, k = 'pri') => `<div class="btn ${k}">${t}</div>`;
+const chip = (t, on) => `<span class="chip ${on ? 'on' : ''}">${t}</span>`;
+const spacer = `<div style="flex:1"></div>`;
+const seg = (a, i) => `<div class="seg">${a.map((x, k) => `<span class="${k === i ? 'on' : ''}">${x}</span>`).join('')}</div>`;
+const radioRow = (t, on) => `<div class="row"><div class="radio ${on ? 'on' : ''}"></div><div class="grow">${t}</div></div>`;
+
+function phone(o) {
+  const nav = o.nav ? `<div class="nav"><span>${o.nav.back ? '‹ ' + o.nav.back : ''}</span><b>${o.nav.title || ''}</b><span>${o.nav.right || ''}</span></div>` : '<div class="nav"></div>';
+  const tabs = `<div class="tabs">${TABS.map((t, i) => `<div class="tab ${i === o.tab ? 'on' : ''}"><i></i>${t}</div>`).join('')}</div>`;
+  const sheet = o.sheet ? `<div class="sheetbg"></div><div class="sheet"><div class="grab"></div>${o.sheet}</div>` : '';
+  const mk = (o.mk || []).map(m => `<i class="mk" style="${m[1]}">${m[0]}</i>`).join('');
+  return `<figure><div class="dev">${mk}<div class="screen ${o.cls || ''}"><div class="sb"><span>9:41</span><span>●●●</span></div>${nav}<div class="body">${o.body}${sheet}</div>${o.tabbar === false ? '' : tabs}<div class="home"></div></div></div><figcaption>${o.cap}</figcaption></figure>`;
+}
+
+/* shared screens */
+const scenario = (back, extra = '', mk) => phone({
+  cap: '3 Scénář', tab: 1, nav: { back, title: 'Situace', right: '✕' }, mk,
+  body: `${step('Situace')}${extra}${img('ilustrace 4:3')}${ph('[Situace: 10–15 vět, zástupný text]')}${lbl('Co uděláte?')}${opts()}`
+});
+const feedback = (extra = '', mk, cta2 = 'Další situace') => phone({
+  cap: '4 Zpětná vazba', tab: 1, nav: { back: '', title: 'Zpětná vazba', right: '✕' }, mk,
+  body: `<div class="opt sel"><span class="l">B</span><span class="ph" style="font-style:normal;color:inherit">[Vaše volba B]</span></div>
+  <div class="fb"><b>[Zpětná vazba k volbě B]</b><br>${ph('[Okamžitý dopad reakce, zástupný text]')}</div>
+  ${lbl('Metodické vysvětlení')}${ph('[Vysvětlení čeká na schválení odborníkem]')}${extra}${spacer}${btn('Zkusit znovu', 'sec')}${btn(cta2)}`
+});
+
+/* variants */
+const V = [
+{
+  id: 'A', name: 'A. Profil jako brána', tag: 'profil → situace → scénář',
+  structure: 'Průvodce o dvou krocích jako v PDF. Krok 1 vybere profil, krok 2 ukáže situace pro něj. Profil je první, co učitel vidí.',
+  notes: [
+    'Jistota, že seznam situací sedí k profilu. Cena: dvě obrazovky před prvním scénářem, a to pokaždé.',
+    'Profil je první obrazovka, takže upozornění „není diagnóza“ musí být hned nahoře a nesmí se přehlédnout.',
+    '„Jiná oblast“ potřebuje vlastní obsah, jinak je to slepá větev (otázka 4).',
+    'Výsledky seskupené podle profilu. Čitelné, ale utvrzuje představu „dítě = profil“.'
+  ],
+  screens: () => [
+    phone({ cap: '1 Profil', tab: 0, nav: { title: 'Domů' }, mk: [[2, 'top:62px;right:8px']],
+      body: `${step('Krok 1 z 2')}${h('Vyberte profil')}${note('[Profil není diagnóza. Slouží jen k výběru scénáře.]')}${PROF.map(p => card(p, '[krátký popis, zástupný]')).join('')}` }),
+    phone({ cap: '2 Situace', tab: 0, nav: { back: 'Profil', title: 'Domů' },
+      body: `${step('Krok 2 z 2')}${h('Vyberte situaci')}<div class="chips">${chip('Profil: PAS', true)}</div>${rows(SIT, 6)}` }),
+    scenario('Situace'),
+    feedback(),
+    phone({ cap: '5 Mé výsledky', tab: 2, nav: { title: 'Mé výsledky' }, mk: [[4, 'top:62px;right:8px']],
+      body: `${lbl('Profil: PAS')}${row('[Situace 1]', 'spuštěno [x]× · poslední volba [B]')}${row('[Situace 2]', 'spuštěno [x]× · poslední volba [A]')}${lbl('Profil: ADHD')}${row('[Situace 3]', 'spuštěno [x]× · poslední volba [C]')}${spacer}${ph('[Prázdný stav: zatím žádný scénář, tlačítko Začít]')}` })
+  ]
+},
+{
+  id: 'B', name: 'B. Situace první, profil jako filtr', tag: 'situace → (filtr) → scénář',
+  structure: 'Domů je rovnou seznam všech 10 situací. Profil je nepovinný filtr v sheetu, který seznam zúží. Bez filtru jde začít okamžitě.',
+  notes: [
+    'Nejrychlejší první scénář: jedno klepnutí na situaci. Profil se nemusí vybírat vůbec.',
+    'Profil je ovládací prvek „zúžit výběr“, ne popis dítěte. Upozornění je přímo v sheetu u volby.',
+    'Bez filtru vidí učitel i situace, které k jeho případu nesedí. Rozhoduje obsah scénářů, ne profil.',
+    'Výsledky jsou plochý seznam podle času, profil jen jako štítek, pokud byl filtr zapnutý.'
+  ],
+  screens: () => [
+    phone({ cap: '1 Situace', tab: 0, nav: { title: 'Domů' }, mk: [[1, 'top:62px;right:8px']],
+      body: `${h('Situace')}<div class="chips">${chip('Profil: všechny ▾')}</div>${rows(SIT, 7)}` }),
+    phone({ cap: '2 Filtr profilu', tab: 0, nav: { title: 'Domů' }, mk: [[2, 'top:62px;right:8px']],
+      body: `${h('Situace')}<div class="chips">${chip('Profil: všechny ▾')}</div>${rows(SIT, 4)}`,
+      sheet: `<b style="font-size:17px">Zúžit výběr (nepovinné)</b>${note('[Profil není diagnóza. Slouží jen k výběru scénáře.]')}${radioRow('Všechny', false)}${radioRow('PAS', true)}${radioRow('Aspergerův syndrom', false)}${radioRow('ADHD', false)}${radioRow('Jiná oblast', false)}${btn('Použít')}` }),
+    scenario('Domů'),
+    feedback(),
+    phone({ cap: '5 Mé výsledky', tab: 2, nav: { title: 'Mé výsledky' },
+      body: `${seg(['Vše', 'Poslední týden'], 0)}${row('[Situace 1]', 'spuštěno [x]× · poslední volba [B]')}<div class="chips" style="margin:-4px 0 4px 36px">${chip('PAS')}</div>${row('[Situace 2]', 'spuštěno [x]× · poslední volba [A]')}${row('[Situace 3]', 'spuštěno [x]× · poslední volba [C]')}<div class="chips" style="margin:-4px 0 4px 36px">${chip('ADHD')}</div>${spacer}${ph('[Prázdný stav: zatím žádný scénář]')}` })
+  ]
+},
+{
+  id: 'C', name: 'C. Profil jako trvalé nastavení', tag: 'jednou profil → pak jen situace',
+  structure: 'Při prvním spuštění se profil zvolí (lze přeskočit) a zůstane viset jako štítek v hlavičce. Další scénáře už profil nevyžadují. Změna jedním klepnutím na štítek.',
+  notes: [
+    'Nejméně kroků při opakovaném použití. Cena: zastaralý profil, když učitel pracuje s jiným dítětem.',
+    'Trvalý štítek v hlavičce nese riziko „označení dítěte“. Otázka, zda se smí ukládat na zařízení.',
+    '„Pokračovat“ jako u Duolinga vrací rozehranou situaci, zkracuje cestu k tréninku.',
+    'Výsledky se dají přepnout mezi profilem a vším. Záznam ale váže profil ke všem scénářům.'
+  ],
+  screens: () => [
+    phone({ cap: '1 První spuštění', tab: 0, tabbar: false, nav: { right: 'Přeskočit' }, mk: [[1, 'top:62px;right:8px']],
+      body: `${step('Jen poprvé')}${h('Se kterým profilem trénujete?')}${note('[Profil není diagnóza. Slouží jen k výběru scénáře. Půjde kdykoli změnit.]')}${PROF.map(p => card(p, '[krátký popis, zástupný]')).join('')}` }),
+    phone({ cap: '2 Domů', tab: 0, nav: { title: 'Domů', right: '' }, mk: [[2, 'top:62px;right:8px'], [3, 'top:300px;right:10px']],
+      body: `<div class="chips">${chip('Profil: PAS ▾', true)}</div>${h('Situace')}<div class="card chev"><div class="av"></div><div class="tx"><b>Pokračovat</b><small>[naposledy rozehraná situace]</small></div></div>${rows(SIT, 5)}` }),
+    scenario('Domů', `<div class="chips">${chip('PAS')}</div>`),
+    feedback(),
+    phone({ cap: '5 Mé výsledky', tab: 2, nav: { title: 'Mé výsledky' }, mk: [[4, 'top:62px;right:8px']],
+      body: `${seg(['Profil: PAS', 'Vše'], 0)}${row('[Situace 1]', 'spuštěno [x]× · poslední volba [B]')}${row('[Situace 2]', 'spuštěno [x]× · poslední volba [A]')}${spacer}${ph('[Prázdný stav pro zvolený profil]')}` })
+  ]
+},
+{
+  id: 'D', name: 'D. Profil až uvnitř situace', tag: 'situace → upřesnění → scénář',
+  structure: 'Učitel vybere situaci. Před scénářem přijde jedna nepovinná obrazovka s upřesněním. Profil patří ke scénáři, ne k učiteli ani k dítěti. Po zpětné vazbě jde zkusit stejnou situaci s jiným upřesněním.',
+  notes: [
+    'Profil nikdy nepopisuje dítě, jen vybírá variantu scénáře. Nejdál od představy diagnózy.',
+    'Jedna nepovinná obrazovka navíc u každého scénáře. „Přeskočit“ ji musí zkrátit na jedno klepnutí.',
+    'Porovnání variant jedné situace je nový učební moment. Vyžaduje ale napsat více variant na situaci (otázka pro odborníka).',
+    'Výsledky ukazují situaci a které varianty jste zkusili.'
+  ],
+  screens: () => [
+    phone({ cap: '1 Situace', tab: 0, nav: { title: 'Domů' },
+      body: `${h('Situace')}${rows(SIT, 8)}` }),
+    phone({ cap: '2 Upřesnění', tab: 0, tabbar: false, nav: { back: 'Situace', right: 'Přeskočit' }, mk: [[1, 'top:62px;right:8px']],
+      body: `${step('Nepovinné')}${h('Upřesnění scénáře')}${note('[Profil není diagnóza. Slouží jen k výběru varianty scénáře.]')}${radioRow('Obecná varianta', true)}${PROF.map(p => radioRow(p, false)).join('')}${spacer}${btn('Začít scénář')}` }),
+    scenario('Upřesnění', `<div class="chips">${chip('Varianta: obecná')}</div>`),
+    feedback(`<div class="card chev" style="min-height:52px"><div class="tx"><b>Zkusit jinou variantu</b><small>[stejná situace, jiné upřesnění]</small></div></div>`, [[3, 'top:62px;right:8px']]),
+    phone({ cap: '5 Mé výsledky', tab: 2, nav: { title: 'Mé výsledky' }, mk: [[4, 'top:62px;right:8px']],
+      body: `${row('[Situace 1]', 'spuštěno [x]×')}<div class="chips" style="margin:-4px 0 4px 36px">${chip('obecná')}${chip('PAS')}</div>${row('[Situace 2]', 'spuštěno [x]×')}<div class="chips" style="margin:-4px 0 4px 36px">${chip('ADHD')}</div>${spacer}${ph('[Prázdný stav: zatím žádný scénář]')}` })
+  ]
+}
+];
+
+document.getElementById('bands').innerHTML = V.map(v => `
+<section class="band" id="var-${v.id}">
+  <div class="vhead"><span class="tag">${v.tag}</span><h2>${v.name}</h2></div>
+  <p class="structure">${v.structure}</p>
+  <ul class="notes">${v.notes.map(n => `<li><span>${n}</span></li>`).join('')}</ul>
+  <div class="story" role="group" aria-label="Storyboard varianty ${v.id}, posuňte do strany">${v.screens().join('')}</div>
+</section>`).join('');
+
+/* ---------- kolo 2: varianta A rozpracovaná ---------- */
+const bar = p => `<div class="bar"><i style="width:${p}%"></i></div>`;
+const prog = (t, p) => `<div class="prog"><span>${t}</span><span>${p}%</span>${bar(p)}</div>`;
+const vnote = p => `<div class="vnote">Verze pro profil ${p} · profil není diagnóza</div>`;
+const nrow = (i, t, st, cls = '') => `<div class="row chev ${cls}"><span class="num ${st === 'hotovo' ? 'done' : ''}">${i}</span><div class="grow">${t}<br><small>${st}</small></div></div>`;
+const ST = ['hotovo', 'hotovo', 'hotovo', 'rozehráno', 'nezačato', 'nezačato', 'nezačato', 'nezačato', 'nezačato', 'nezačato'];
+const order = (from, n, st = ST) => SIT.slice(from, from + n).map((s, k) => nrow(from + k + 1, s, st[from + k])).join('');
+const longOpt = l => `<div class="opt long"><span class="l">${l}</span><span class="ph" style="font-style:normal">[Reakce ${l}: dlouhá varianta textu na dva až tři řádky, zástupná, aby bylo vidět zalomení]</span></div>`;
+const NAV_SC = { title: '[Název situace]', right: '✕' };
+
+const AF = [
+{
+  tag: 'A · 1', name: 'První spuštění', structure: 'Úvod se ukáže jen poprvé. Pak profil (krok 1 z 2) a situace pro profil v doporučeném pořadí (krok 2 z 2). Od třetí obrazovky je vidět spodní lišta.',
+  notes: [
+    'Upozornění „profil není diagnóza“ je hned na úplně první obrazovce, ještě před volbou profilu.',
+    'Profil je krok 1 z 2. Volba se pamatuje, změnit jde kdykoli přes štítek „Změnit“.',
+    'Situace v doporučeném pořadí 1–10 se stavem slovem (hotovo, rozehráno, nezačato), ne jen barvou. Čísla znamenají skutečné pořadí.'
+  ],
+  screens: () => [
+    phone({ cap: '1 Úvod (jen poprvé)', tabbar: false, nav: null, mk: [[1, 'top:62px;right:8px']],
+      body: `${spacer}${img('ilustrace')}${h('INKLUEM')}${ph('[Jedna věta: trénink rozhodování v situacích ve třídě]')}${note('[Profil není diagnóza. Slouží jen k výběru scénáře.]')}${ph('[Pro učitele a asistenty. Doma i na workshopu.]')}${spacer}${btn('Vybrat profil')}` }),
+    phone({ cap: '2 Profil', tabbar: false, nav: { back: 'Úvod', title: 'Profil' }, mk: [[2, 'top:62px;right:8px']],
+      body: `${step('Krok 1 z 2')}${h('Vyberte profil')}${note('[Profil není diagnóza. Slouží jen k výběru scénáře.]')}${PROF.map(p => card(p, '[popis bez diagnostických tvrzení]')).join('')}` }),
+    phone({ cap: '3 Situace pro profil', tab: 0, nav: { back: 'Profil', title: '' }, mk: [[3, 'top:62px;right:8px']],
+      body: `${step('Krok 2 z 2')}${h('Situace pro profil')}<div class="chips">${chip('Profil: PAS · Změnit', true)}</div>${lbl('Doporučené pořadí')}${order(0, 6, Array(10).fill('nezačato'))}<div class="cue">… další 4 (scroll)</div>` })
+  ]
+},
+{
+  tag: 'A · 2', name: 'Trénink', structure: 'Scénář a zpětná vazba běží přes celou obrazovku bez spodní lišty, jako soustředěný úkol. Křížek ukládá rozehranou situaci. Po poslední situaci přijde shrnutí profilu.',
+  notes: [
+    'Hlavička ukazuje, kde jsem: název situace, pozici 3 z 10 a postup. Pod ní znovu upozornění u verze pro profil.',
+    'Křížek nic nemaže. Rozehraná situace se objeví v „Pokračovat“ na Domů.',
+    'Zpětná vazba vede dál: hlavní tlačítko „Další v pořadí“, vedlejší „Zkusit znovu“.',
+    'Dokončený profil: shrnutí bez skóre, dokud není rozhodnuto, jak hodnotit reakce. Nabídne opakování nebo další profil.'
+  ],
+  screens: () => [
+    phone({ cap: '4 Scénář', tabbar: false, nav: NAV_SC, mk: [[1, 'top:62px;left:8px'], [2, 'top:112px;left:8px']],
+      body: `${prog('Situace 3 z 10', 20)}${vnote('PAS')}${img('ilustrace 4:3')}${ph('[Situace: 10–15 vět, zástupný text]')}${lbl('Co uděláte?')}${opts()}` }),
+    phone({ cap: '5 Zpětná vazba', tabbar: false, nav: { title: 'Zpětná vazba', right: '✕' }, mk: [[3, 'top:62px;right:8px']],
+      body: `${prog('Situace 3 z 10', 30)}<div class="opt sel"><span class="l">B</span><span class="ph" style="font-style:normal;color:inherit">[Vaše volba B]</span></div>
+      <div class="fb"><b>[Zpětná vazba k volbě B]</b><br>${ph('[Okamžitý dopad reakce, zástupný text]')}</div>
+      ${lbl('Metodické vysvětlení')}${ph('[Vysvětlení čeká na schválení odborníkem]')}${spacer}${btn('Zkusit znovu', 'sec')}${btn('Další v pořadí: [situace 4]')}` }),
+    phone({ cap: '6 Profil dokončen', tabbar: false, nav: { right: '✕' }, mk: [[4, 'top:62px;right:8px']],
+      body: `${spacer}<div class="center"><div class="empty" style="border-style:solid"></div>${h('Profil PAS: 10 z 10')}${ph('[Krátké shrnutí, co jste prošli]')}</div>${bar(100)}${spacer}${lbl('Co dál')}${btn('Zkusit znovu vybrané situace', 'sec')}${btn('Vybrat další profil')}` })
+  ]
+},
+{
+  tag: 'A · 3', name: 'Návrat do aplikace a knihovna', structure: 'Domů vede: karta Pokračovat a další situace v pořadí. Záložka Scénáře je volná knihovna všech 10 situací bez pořadí, verze pro profil se volí v sheetu. Mé výsledky ukazují postup po profilech.',
+  notes: [
+    'Karta „Pokračovat“ je jediná hlavní akce na Domů: profil, situace, postup.',
+    'Scénáře = volná knihovna. Domů = vedená cesta. Dvě záložky, dva různé úkoly.',
+    'Situace z knihovny má verzi pro každý profil. Aktuální profil je předvybraný, upozornění je přímo u volby.',
+    'Mé výsledky: postup pro každý profil zvlášť a naposledy spuštěné situace s poslední volbou.'
+  ],
+  screens: () => [
+    phone({ cap: '7 Domů s Pokračovat', tab: 0, nav: { title: 'Domů' }, mk: [[1, 'top:62px;right:8px']],
+      body: `<div class="chips">${chip('Profil: PAS · Změnit', true)}</div>${lbl('Pokračovat')}<div class="hero"><b>[Název situace 4]</b>${prog('Situace 4 z 10', 30)}${btn('Pokračovat')}</div>${lbl('Další v pořadí')}${order(4, 3)}` }),
+    phone({ cap: '8 Scénáře (knihovna)', tab: 1, nav: { title: 'Scénáře' }, mk: [[2, 'top:62px;right:8px']],
+      body: `${h('Všechny situace')}${SIT.slice(0, 7).map(s => row(s, 'vyzkoušeno [x] ze 4 verzí')).join('')}<div class="cue">… další 3 (scroll)</div>` }),
+    phone({ cap: '9 Výběr verze', tab: 1, nav: { title: 'Scénáře' }, mk: [[3, 'top:62px;right:8px']],
+      body: `${h('Všechny situace')}${rows(SIT, 4)}`,
+      sheet: `<b style="font-size:17px">[Název situace]</b>${ph('Vyberte verzi pro profil')}${note('[Profil není diagnóza. Slouží jen k výběru scénáře.]')}${radioRow('PAS <small style="color:var(--g3)">· váš profil</small>', true)}${radioRow('Aspergerův syndrom', false)}${radioRow('ADHD', false)}${radioRow('Jiná oblast', false)}${btn('Začít')}` }),
+    phone({ cap: '10 Mé výsledky', tab: 2, nav: { title: 'Mé výsledky' }, mk: [[4, 'top:62px;right:8px']],
+      body: `${lbl('Postup podle profilu')}<div class="prow"><span><b>PAS</b> <small>3 z 10</small></span>${bar(30)}</div><div class="prow"><span><b>ADHD</b> <small>1 z 10</small></span>${bar(10)}</div><div class="prow"><span><b>Aspergerův syndrom</b> <small>0 z 10</small></span>${bar(0)}</div>${lbl('Naposledy')}${row('[Situace 3]', 'PAS · poslední volba [B] · [x]×')}${row('[Situace 1]', 'ADHD · poslední volba [C] · [x]×')}` })
+  ]
+},
+{
+  tag: 'A · 4', name: 'Zátěžové stavy', structure: 'Stavy, které ukázkový obsah skrývá: nic ještě nebylo spuštěno, 15 vět situace, velké písmo s dlouhými reakcemi, chybějící verze pro profil.',
+  notes: [
+    'Prázdné Mé výsledky říkají, co tu bude, a mají jedno tlačítko zpět do tréninku.',
+    'Dlouhý text odsune reakce pod okraj. Lišta „Vybrat reakci“ dole ukazuje, že pod textem něco je (otázka 9).',
+    'Velké písmo (Dynamic Type): písmeno reakce zarovnané nahoru, text se zalamuje, nikdy se neořezává. Reakce pak jsou až pod textem situace.',
+    'Verze pro profil chybí: situace zůstane v pořadí, ale je šedá, se stavem slovem a bez možnosti spustit (otázka 1).'
+  ],
+  screens: () => [
+    phone({ cap: '11 Mé výsledky, prázdné', tab: 2, nav: { title: 'Mé výsledky' }, mk: [[1, 'top:62px;right:8px']],
+      body: `${spacer}<div class="center"><div class="empty"></div><b style="font-size:19px">Zatím žádný scénář</b>${ph('[Tady uvidíte postup podle profilu a situace, které jste zkusili]')}</div>${btn('Začít trénink')}${spacer}` }),
+    phone({ cap: '12 Dlouhý text scénáře', tabbar: false, nav: NAV_SC, mk: [[2, 'top:62px;left:8px']],
+      body: `${prog('Situace 3 z 10', 20)}${vnote('PAS')}${img('ilustrace 4:3')}${ph(Array.from({ length: 15 }, (_, i) => `[Věta ${i + 1} situace: zástupný text o délce běžné věty, kolem patnácti až dvaceti slov.]`).join(' '))}${lbl('Co uděláte?')}${opts()}<div class="stick">${btn('Vybrat reakci ↓', 'sec')}</div>` }),
+    phone({ cap: '13 Velké písmo, dlouhé reakce', tabbar: false, cls: 'big', nav: NAV_SC, mk: [[3, 'top:62px;left:8px']],
+      body: `${vnote('ADHD')}${lbl('Co uděláte?')}${['A', 'B', 'C'].map(longOpt).join('')}<div class="cue">… reakce D (scroll)</div>` }),
+    phone({ cap: '14 Verze pro profil chybí', tab: 0, nav: { title: 'Domů' }, mk: [[4, 'top:62px;right:8px']],
+      body: `<div class="chips">${chip('Profil: Jiná oblast · Změnit', true)}</div>${lbl('Doporučené pořadí')}${nrow(1, SIT[0], 'nezačato')}${nrow(2, SIT[1], 'verze pro tento profil zatím není', 'dim')}${nrow(3, SIT[2], 'nezačato')}${nrow(4, SIT[3], 'verze pro tento profil zatím není', 'dim')}${nrow(5, SIT[4], 'nezačato')}<div class="cue">… další 5 (scroll)</div>` })
+  ]
+}
+];
+
+document.getElementById('afull').innerHTML = `
+<section class="vhead"><span class="tag">kolo 2 · varianta A rozpracovaná</span><h2>A. Profil jako brána: celý flow</h2>
+<p class="structure">Čtyři storyboardy: první spuštění, trénink, návrat a knihovna, zátěžové stavy. Čísla na obrazovkách odkazují na poznámky u každého řádku.</p></section>` +
+AF.map(v => `
+<section class="band">
+  <div class="subhead"><span class="tag">${v.tag}</span><h2>${v.name}</h2></div>
+  <p class="structure">${v.structure}</p>
+  <ul class="notes">${v.notes.map(n => `<li><span>${n}</span></li>`).join('')}</ul>
+  <div class="story" role="group" aria-label="Storyboard ${v.name}, posuňte do strany">${v.screens().join('')}</div>
+</section>`).join('');
+</script>
