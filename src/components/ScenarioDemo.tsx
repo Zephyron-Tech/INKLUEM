@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { situations, startIndex } from "./situations";
+import { demoSituations as situations } from "./situations";
 
 const LETTERS = ["A", "B", "C", "D"] as const;
 const LETTER_CLASS = ["l-a", "l-b", "l-c", "l-d"] as const;
@@ -33,7 +33,7 @@ function Retry() {
 }
 
 export function ScenarioDemo() {
-  const [index, setIndex] = useState(startIndex);
+  const [index, setIndex] = useState(0);
   const [view, setView] = useState<"scenario" | "feedback">("scenario");
   const [choice, setChoice] = useState<number | null>(null);
   const [pending, setPending] = useState<number | null>(null);
@@ -141,7 +141,7 @@ export function ScenarioDemo() {
                 width={800}
                 height={448}
                 sizes="320px"
-                priority={index === startIndex}
+                priority={index === 0}
                 className="h-full w-full object-cover"
               />
             </div>
@@ -233,7 +233,7 @@ export function ScenarioDemo() {
               </p>
             </div>
 
-            <div className="rise mt-auto flex flex-col gap-2" style={{ "--i": 3 } as React.CSSProperties}>
+            <div className="rise fb-actions flex flex-col gap-2" style={{ "--i": 3 } as React.CSSProperties}>
               <button type="button" className="btn-phone primary" onClick={next}>
                 Další situace
                 <Arrow />

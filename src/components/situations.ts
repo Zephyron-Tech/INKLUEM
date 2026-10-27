@@ -49,5 +49,11 @@ export const situations: Situation[] = [
   stub("Návrat do klidu", "navrat-do-klidu"),
 ];
 
-/** Ukázka začíná scénářem z PDF (v mockupu je to situace 7 z 10). */
-export const startIndex = 6;
+/**
+ * Pořadí v ukázce je pevné: začíná scénářem z PDF jako situace 1 z 10, dál následují
+ * ostatní v pořadí z PDF. Mozaika na stránce drží původní pořadí z PDF.
+ */
+export const demoSituations: Situation[] = [
+  ...situations.filter((s) => s.fromPdf),
+  ...situations.filter((s) => !s.fromPdf),
+];

@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { Logo } from "@/components/Logo";
 import { ScenarioDemo } from "@/components/ScenarioDemo";
+import { MobileMenu } from "@/components/MobileMenu";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { situations } from "@/components/situations";
 
-const container = "mx-auto w-full max-w-6xl px-5 sm:px-8";
+const container = "wrap";
 
 const steps = [
   {
@@ -67,7 +68,7 @@ const tilePlacement = [
 ];
 
 const navLink =
-  "rounded-md py-2 transition-colors hover:text-foreground";
+  "flex min-h-11 items-center rounded-md transition-colors hover:text-foreground";
 
 export default function Home() {
   return (
@@ -79,19 +80,21 @@ export default function Home() {
         Přeskočit na obsah
       </a>
 
-      <header className={`${container} flex items-center justify-between gap-4 py-4`}>
-        <a href="#" className="flex items-center gap-3 text-lg font-extrabold tracking-wide">
+      <header className={`${container} flex items-center justify-between gap-4 py-3`}>
+        <a href="#" aria-label="INKLUEM, nahoru" className="flex min-h-11 min-w-11 items-center gap-3 text-lg font-extrabold tracking-wide">
           <Logo size={40} />
-          INKLUEM
+          <span className="hidden min-[380px]:inline" aria-hidden="true">INKLUEM</span>
         </a>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 md:gap-6">
           <nav aria-label="Hlavní navigace" className="hidden gap-6 text-sm font-bold text-muted md:flex">
+            <a className={navLink} href="#ukazka">Ukázka</a>
             <a className={navLink} href="#jak-to-funguje">Jak to funguje</a>
             <a className={navLink} href="#situace">Situace</a>
             <a className={navLink} href="#profily">Profily</a>
             <a className={navLink} href="/mockup">Mockup</a>
           </nav>
           <ThemeToggle />
+          <MobileMenu />
         </div>
       </header>
 
@@ -110,24 +113,27 @@ export default function Home() {
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="#ukazka"
-                className="inline-flex min-h-12 items-center rounded-2xl bg-navy px-6 font-bold text-on-navy transition-opacity hover:opacity-90"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-navy px-6 font-bold text-on-navy transition-opacity hover:opacity-90 sm:w-auto"
               >
                 Zkusit ukázku
               </a>
               <a
                 href="/mockup"
-                className="inline-flex min-h-12 items-center rounded-2xl border border-line bg-surface px-6 font-bold transition-colors hover:border-navy"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-line bg-surface px-6 font-bold transition-colors hover:border-navy sm:w-auto"
               >
                 Mockup aplikace
               </a>
             </div>
-            <p className="mt-6 max-w-md text-muted">
+            <p className="mt-6 hidden max-w-md text-muted lg:block">
               Ukázka vedle je funkční. Klepněte na reakci a uvidíte, jak bude
               aplikace odpovídat.
             </p>
           </div>
 
-          <div id="ukazka" className="rounded-[28px] bg-info p-3 sm:p-8">
+          <div id="ukazka" className="scroll-mt-4 -mx-4 rounded-[28px] bg-info p-2 sm:mx-0 sm:p-8">
+            <p className="mb-3 px-3 pt-2 text-center text-sm font-bold text-info-ink lg:hidden">
+              Funkční ukázka. Klepněte na reakci.
+            </p>
             <ScenarioDemo />
           </div>
         </section>
@@ -165,6 +171,7 @@ export default function Home() {
                 situaci a její možné důsledky.
               </p>
             </div>
+            <div>
             <ol className="divide-y divide-line border-y border-line">
               {steps.map((s) => (
                 <li key={s.name} className="grid gap-1 py-5 sm:grid-cols-[10rem_1fr] sm:gap-6">
@@ -173,6 +180,13 @@ export default function Home() {
                 </li>
               ))}
             </ol>
+            <a
+              href="#ukazka"
+              className="mt-6 inline-flex min-h-12 items-center rounded-2xl bg-navy px-6 font-bold text-on-navy transition-opacity hover:opacity-90"
+            >
+              Vyzkoušet v ukázce
+            </a>
+            </div>
           </div>
         </section>
 
@@ -292,7 +306,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className={`${container} flex flex-col gap-4 py-10 text-sm text-muted sm:flex-row sm:items-start sm:justify-between`}>
+      <footer className={`${container} flex flex-col gap-4 pt-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] text-sm text-muted sm:flex-row sm:items-start sm:justify-between`}>
         <p className="flex items-center gap-2 font-extrabold text-foreground">
           <Logo size={24} />
           INKLUEM

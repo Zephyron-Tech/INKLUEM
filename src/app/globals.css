@@ -112,16 +112,105 @@ body {
   border-radius: 6px;
 }
 
+/* Tailwind v4 nedědí pointer u tlačítek, nastavíme ho pro všechny klikací prvky. */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+a[href],
+summary,
+label[for],
+select:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* Šířka obsahu s ohledem na výřez a zaoblené rohy telefonu. */
+.wrap {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: max(1.25rem, env(safe-area-inset-left), env(safe-area-inset-right));
+}
+
+@media (min-width: 40rem) {
+  .wrap {
+    padding-inline: max(2rem, env(safe-area-inset-left), env(safe-area-inset-right));
+  }
+}
+
 /* Skok na kotvu nesmí zmizet pod hranou okna. */
 section[id] {
   scroll-margin-top: 1rem;
 }
 
-/* Stav přepínače se řídí atributem na <html>, takže je správně už při prvním vykreslení. */
-:root:not([data-theme="dark"]) .theme-btn[data-value="light"],
-:root[data-theme="dark"] .theme-btn[data-value="dark"] {
+/* ---------- Přepínač režimu ---------- */
+
+.tt {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  padding: 3px;
+}
+
+.tt-thumb {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 999px;
   background: var(--navy);
+  transition: transform 300ms var(--ease);
+}
+
+:root[data-theme="dark"] .tt-thumb {
+  transform: translateX(100%);
+}
+
+.tt-btn {
+  position: relative;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 999px;
+  color: var(--muted);
+  transition: color 250ms ease-out;
+}
+
+.tt-icon {
+  transition:
+    transform 400ms var(--ease),
+    opacity 250ms ease-out;
+}
+
+/* Aktivní ikona leží na palci a má jeho barvu textu, neaktivní se otočí a zeslábne. */
+:root:not([data-theme="dark"]) .tt-btn[data-value="light"],
+:root[data-theme="dark"] .tt-btn[data-value="dark"] {
   color: var(--on-navy);
+}
+
+:root:not([data-theme="dark"]) .tt-moon {
+  opacity: 0.7;
+  transform: scale(0.85);
+}
+
+:root[data-theme="dark"] .tt-sun {
+  opacity: 0.7;
+  transform: rotate(-60deg) scale(0.85);
+}
+
+/* Prolnutí barev celé stránky při přepnutí (View Transitions). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 250ms;
+  animation-timing-function: ease-out;
 }
 
 [data-theme="dark"] .tile img,
@@ -142,6 +231,17 @@ section[id] {
   box-shadow:
     0 0 0 1.5px rgb(255 255 255 / 0.08) inset,
     0 24px 48px -16px rgb(15 25 45 / 0.35);
+}
+
+@media (max-width: 24rem) {
+  .phone {
+    padding: 8px;
+    border-radius: 46px;
+  }
+
+  .phone-screen {
+    border-radius: 38px;
+  }
 }
 
 .phone-screen {
@@ -204,8 +304,7 @@ section[id] {
   flex-direction: column;
   gap: 10px;
   overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 6px 18px 30px;
+  padding: 6px 16px 30px;
   background: var(--background);
   transition:
     transform 420ms var(--ease),
@@ -381,6 +480,14 @@ section[id] {
   color: var(--info-ink);
 }
 
+.fb-actions {
+  position: sticky;
+  bottom: -30px;
+  margin-top: auto;
+  background: var(--background);
+  padding: 8px 0 30px;
+}
+
 .btn-phone {
   display: flex;
   width: 100%;
@@ -437,6 +544,9 @@ section[id] {
     scroll-behavior: auto;
   }
 
+  .tt-thumb,
+  .tt-btn,
+  .tt-icon,
   .pane,
   .opt,
   .letter,
@@ -448,6 +558,12 @@ section[id] {
   .pane-scenario[data-enter="next"],
   .pane-feedback[data-active="true"] .rise {
     animation: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 
   .opt:active,

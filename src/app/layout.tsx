@@ -38,6 +38,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   themeColor: "#f7f4ef",
   colorScheme: "light",
+  viewportFit: "cover",
 };
 
 // Běží před vykreslením, aby se při načtení nic nepřeblikávalo. Výchozí je vždy světlý
