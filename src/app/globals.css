@@ -537,11 +537,116 @@ section[id] {
   }
 }
 
+/* ---------- Mobilní menu ---------- */
+
+/* Hamburger se plynule překlápí na křížek. */
+.burger {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 16px;
+}
+
+.burger i {
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition:
+    transform 340ms var(--ease),
+    opacity 160ms ease-out;
+}
+
+.burger i:nth-child(1) {
+  top: 0;
+}
+.burger i:nth-child(2) {
+  top: 7px;
+}
+.burger i:nth-child(3) {
+  top: 14px;
+}
+
+.burger[data-open="true"] i:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.burger[data-open="true"] i:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.2);
+}
+.burger[data-open="true"] i:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.menu-btn:active {
+  transform: scale(0.94);
+}
+
+.menu-btn {
+  transition: transform 160ms var(--ease);
+}
+
+/* Panel se rozbaluje z pravého horního rohu u tlačítka, položky naskakují po sobě.
+   Zavírá se rychleji než otevírá a je pak skrytý i pro čtečku. */
+.menu-panel {
+  transform-origin: top right;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px) scale(0.94);
+  transition:
+    opacity 150ms ease-in,
+    transform 200ms ease-in,
+    visibility 0s linear 200ms;
+}
+
+.menu-panel[data-open="true"] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  transition:
+    opacity 200ms ease-out,
+    transform 360ms var(--ease),
+    visibility 0s;
+}
+
+.menu-panel a {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 120ms ease-in,
+    transform 120ms ease-in,
+    background-color 160ms ease-out;
+}
+
+.menu-panel[data-open="true"] a {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 240ms ease-out calc(var(--i, 0) * 45ms + 70ms),
+    transform 380ms var(--ease) calc(var(--i, 0) * 45ms + 70ms),
+    background-color 160ms ease-out;
+}
+
 /* ---------- Pohyb ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .burger i,
+  .menu-btn,
+  .menu-panel,
+  .menu-panel a {
+    transition: none !important;
+  }
+
+  .menu-btn:active {
+    transform: none;
   }
 
   .tt-thumb,
